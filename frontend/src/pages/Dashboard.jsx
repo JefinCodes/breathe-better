@@ -182,9 +182,12 @@ export default function Dashboard() {
         )}
 
         {/* Forecast (independent query — renders separately) */}
+        {/* isPending = no cached data yet + query is enabled; covers the
+            initial "enabled but not yet resolved" window that isLoading misses
+            when TanStack Query v5 distinguishes loading vs pending states.    */}
         <ForecastSection
           forecast={forecastData?.forecast}
-          isLoading={forecastQuery.isLoading && coords != null}
+          isLoading={coords != null && (forecastQuery.isPending || forecastQuery.isFetching && !forecastData)}
           isError={forecastQuery.isError}
           onRetry={() => forecastQuery.refetch()}
         />
