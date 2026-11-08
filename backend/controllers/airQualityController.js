@@ -207,7 +207,8 @@ async function getForecast(req, res) {
 
   try {
     const raw = await airQualityService.getForecast(lat, lon);
-    const hours = Array.isArray(raw.hoursInfo) ? raw.hoursInfo : [];
+    // Google's forecast:lookup response uses "hourlyForecasts" (not "hoursInfo")
+    const hours = Array.isArray(raw.hourlyForecasts) ? raw.hourlyForecasts : [];
 
     return res.json({
       success: true,

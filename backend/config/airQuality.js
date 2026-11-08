@@ -41,8 +41,16 @@ const config = {
   },
 
   forecast: {
-    /** Maximum hours the Google Forecast API supports. */
-    maxHours: 96,
+    /**
+     * Forecast window requested from the Google API.
+     * Despite the docs mentioning 96 h, empirical testing shows the API
+     * rejects periods that extend too far from the current time. 72 hours
+     * (3 days) is the reliable maximum that consistently returns data.
+     * pageSize controls records per page; set equal to maxHours so the
+     * full window is returned in a single request when possible.
+     */
+    maxHours: 72,
+    pageSize: 72,
   },
 
   history: {

@@ -42,21 +42,64 @@ async function getCurrentConditions(latitude, longitude) {
 // ---------------------------------------------------------------------------
 
 /**
- * Fetches hourly air quality forecast for up to 96 hours.
+ * Fetches hourly air quality forecast for the next 72 hours.
+ *
+ * Key API facts (confirmed by empirical testing):
+ *   - The forecast:lookup endpoint uses a "period" object { startTime, endTime }
+ *     NOT an "hours" field (which is a Weather API param and is rejected here).
+ *   - The response array key is "hourlyForecasts" (not "hoursInfo").
+ *   - "pageSize" controls records per page; pagination via nextPageToken.
+ *   - startTime MUST be a UTC midnight boundary (00:00:00Z); requests starting
+ *     at the current hour are rejected with INVALID_ARGUMENT.
+ *   - The reliable max window from midnight is 72 h (3 days).
+ *
+ * All pages are merged transparently so the caller always gets a flat array.
  *
  * @param {number} latitude
  * @param {number} longitude
- * @returns {Promise<object>} Raw Google API response body.
+ * @returns {Promise<{ hourlyForecasts: Array }>}
  */
 async function getForecast(latitude, longitude) {
-  const response = await googleApi.post('/forecast:lookup', {
-    location: { latitude, longitude },
-    hours: config.forecast.maxHours,
-    extraComputations: config.extraComputations.full,
-    universalAqi: true,
-    languageCode: 'en',
-  });
-  return response.data;
+  // Google's forecast API requires startTime to be a UTC midnight boundary.
+  // setUTCHours(24, 0, 0, 0) always advances to the next 00:00:00Z, which
+  // gives today's midnight when called before midnight and tomorrow's midnight
+  // when called after — always a valid, clean window start.
+  const startTime = new Date();
+  startTime.setUTCHours(24, 0, 0, 0);
+
+  const endTime = new Date(startTime.getTime() + config.forecast.maxHours * 60 * 60 * 1000);
+
+  const allHours = [];
+  let pageToken = undefined;
+
+  do {
+    const body = {
+      location: { latitude, longitude },
+      period: {
+        startTime: startTime.toISOString(),
+        endTime: endTime.toISOString(),
+      },
+      pageSize: config.forecast.pageSize,
+      extraComputations: config.extraComputations.full,
+      universalAqi: true,
+      languageCode: 'en',
+    };
+
+    if (pageToken) {
+      body.pageToken = pageToken;
+    }
+
+    const response = await googleApi.post('/forecast:lookup', body);
+    const data = response.data;
+
+    if (Array.isArray(data.hourlyForecasts)) {
+      allHours.push(...data.hourlyForecasts);
+    }
+
+    pageToken = data.nextPageToken || null;
+  } while (pageToken);
+
+  return { hourlyForecasts: allHours };
 }
 
 // ---------------------------------------------------------------------------
