@@ -182,15 +182,23 @@ export default function Dashboard() {
         )}
 
         {/* Forecast (independent query — renders separately) */}
-        {/* isPending = no cached data yet + query is enabled; covers the
-            initial "enabled but not yet resolved" window that isLoading misses
-            when TanStack Query v5 distinguishes loading vs pending states.    */}
-        <ForecastSection
-          forecast={forecastData?.forecast}
-          isLoading={coords != null && (forecastQuery.isPending || forecastQuery.isFetching && !forecastData)}
-          isError={forecastQuery.isError}
-          onRetry={() => forecastQuery.refetch()}
-        />
+        {/* Use query.isLoading (= isPending && isFetching) — the same flag used
+            for the current-conditions skeleton above. This ensures the skeleton
+            is only visible while a fetch is actively in-flight. Using isPending
+            alone keeps the skeleton showing during retry cool-down windows and
+            in between failed attempts, so the user is stuck in permanent
+            skeleton state until all retries exhaust. isFetching alone would
+            flash the skeleton again on background refetches of cached data.
+            isLoading = isPending && isFetching is exactly right: first fetch
+            only, actively in-flight.                                           */}
+        {coords != null && (
+          <ForecastSection
+            forecast={forecastData?.forecast}
+            isLoading={forecastQuery.isLoading}
+            isError={forecastQuery.isError}
+            onRetry={() => forecastQuery.refetch()}
+          />
+        )}
       </main>
     </div>
   );
