@@ -12,8 +12,21 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 // ---------------------------------------------------------------------------
 
+const allowedOrigins = [
+  'https://breathe-better-app.vercel.app',
+  process.env.FRONTEND_URL,
+  'http://localhost:5173',
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. mobile apps, curl)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS: origin '${origin}' not allowed`));
+    }
+  },
   methods: ['GET'],
 }));
 
