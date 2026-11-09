@@ -7,10 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
   Cell,
 } from 'recharts';
-import { Layers, Activity } from 'lucide-react';
+import { Layers } from 'lucide-react';
 import { formatCityName, formatUnit } from '../../lib/utils';
 import {
   COMPARISON_POLLUTANTS,
@@ -28,7 +27,7 @@ export default function PollutantComparisonChart({
   selectedCities,
   currentQueries,
 }) {
-  const [activeTab, setActiveTab] = useState('ALL'); // 'ALL' or pollutant code (e.g., 'pm25')
+  const [activeTab, setActiveTab] = useState(COMPARISON_POLLUTANTS[0].code); // defaults to 'pm25'
 
   if (selectedCities.length === 0) return null;
 
@@ -64,31 +63,9 @@ export default function PollutantComparisonChart({
     };
   });
 
-  // -------------------------------------------------------------------------
-  // Case 1: "ALL" Tab - Grouped BarChart by Pollutant
-  // -------------------------------------------------------------------------
-  const groupedChartData = COMPARISON_POLLUTANTS.map((pDef) => {
-    const item = {
-      pollutantCode: pDef.code,
-      pollutantName: pDef.name,
-      fullName: pDef.fullName,
-      unit: pDef.defaultUnit,
-    };
-
-    citiesPollutantData.forEach((city) => {
-      const metric = city.metrics[pDef.code];
-      // Store under key: `${city.cityName}`. If null, Recharts won't render fake 0 bar
-      item[city.cityName] = metric?.value ?? null;
-      if (metric?.units) item.unit = metric.units;
-    });
-
-    return item;
-  });
-
-  // -------------------------------------------------------------------------
-  // Case 2: Specific Pollutant Tab (e.g., PM2.5)
-  // -------------------------------------------------------------------------
-  const selectedPDef = COMPARISON_POLLUTANTS.find((p) => p.code === activeTab);
+  // Specific Pollutant Tab Data (e.g., PM2.5)
+  const selectedPDef =
+    COMPARISON_POLLUTANTS.find((p) => p.code === activeTab) || COMPARISON_POLLUTANTS[0];
   const singlePollutantChartData = citiesPollutantData.map((city) => {
     const metric = city.metrics[activeTab];
     return {
@@ -117,17 +94,6 @@ export default function PollutantComparisonChart({
 
         {/* Tab Selector */}
         <div className="flex items-center flex-wrap gap-1 bg-gray-100/80 p-1 rounded-xl">
-          <button
-            type="button"
-            onClick={() => setActiveTab('ALL')}
-            className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
-              activeTab === 'ALL'
-                ? 'bg-white text-blue-600 shadow-xs'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-white/40'
-            }`}
-          >
-            All Pollutants
-          </button>
           {COMPARISON_POLLUTANTS.map((p) => (
             <button
               key={p.code}
@@ -145,126 +111,56 @@ export default function PollutantComparisonChart({
         </div>
       </div>
 
-      {/* Render Chart Based on Active Tab */}
-      {activeTab === 'ALL' ? (
-        <div className="space-y-4">
-          {/* Units Reference Strip */}
-          <div className="flex flex-wrap items-center gap-2 text-[11px] text-gray-500 bg-gray-50 p-2.5 rounded-xl border border-gray-150">
-            <span className="font-semibold text-gray-700 flex items-center gap-1">
-              <Activity className="w-3.5 h-3.5 text-blue-600" />
-              Units:
-            </span>
-            <span>PM2.5 (µg/m³)</span>
-            <span>•</span>
-            <span>PM10 (µg/m³)</span>
-            <span>•</span>
-            <span>NO₂ (ppb)</span>
-            <span>•</span>
-            <span>SO₂ (ppb)</span>
-            <span>•</span>
-            <span>CO (ppm)</span>
-            <span>•</span>
-            <span>O₃ (ppb)</span>
-          </div>
+      {/* Single Pollutant Chart */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between text-xs text-gray-500 bg-blue-50/50 p-2.5 rounded-xl border border-blue-100">
+          <span className="font-semibold text-blue-900">
+            {selectedPDef?.fullName} ({selectedPDef?.label})
+          </span>
+          <span className="font-medium text-blue-700">
+            Unit: <strong>{selectedPDef?.defaultUnit}</strong>
+          </span>
+        </div>
 
-          {/* Grouped Bar Chart */}
-          <div className="h-80 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={groupedChartData}
-                margin={{ top: 20, right: 30, left: 10, bottom: 25 }}
+        <div className="h-80 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={singlePollutantChartData}
+              margin={{ top: 20, right: 30, left: 10, bottom: 25 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+              <XAxis
+                dataKey="cityName"
+                tick={{ fontSize: 12, fill: '#374151', fontWeight: 500 }}
+                tickLine={false}
+                axisLine={{ stroke: '#e5e7eb' }}
+              />
+              <YAxis
+                tick={{ fontSize: 11, fill: '#6b7280' }}
+                tickLine={false}
+                axisLine={{ stroke: '#e5e7eb' }}
+                label={{
+                  value: `Concentration (${selectedPDef?.defaultUnit})`,
+                  angle: -90,
+                  position: 'insideLeft',
+                  style: { textAnchor: 'middle', fill: '#9ca3af', fontSize: 11 },
+                  offset: 0,
+                }}
+              />
+              <Tooltip content={<SinglePollutantTooltip />} cursor={{ fill: 'rgba(243, 244, 246, 0.6)' }} />
+              <Bar
+                dataKey="value"
+                radius={[8, 8, 0, 0]}
+                maxBarSize={60}
               >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                <XAxis
-                  dataKey="pollutantName"
-                  tick={{ fontSize: 12, fill: '#374151', fontWeight: 600 }}
-                  tickLine={false}
-                  axisLine={{ stroke: '#e5e7eb' }}
-                />
-                <YAxis
-                  tick={{ fontSize: 11, fill: '#6b7280' }}
-                  tickLine={false}
-                  axisLine={{ stroke: '#e5e7eb' }}
-                  label={{
-                    value: 'Concentration Value',
-                    angle: -90,
-                    position: 'insideLeft',
-                    style: { textAnchor: 'middle', fill: '#9ca3af', fontSize: 11 },
-                    offset: 0,
-                  }}
-                />
-                <Tooltip content={<GroupedTooltip />} cursor={{ fill: 'rgba(243, 244, 246, 0.6)' }} />
-                <Legend
-                  verticalAlign="top"
-                  align="right"
-                  iconType="circle"
-                  wrapperStyle={{ fontSize: 12, paddingBottom: 10 }}
-                />
-                {citiesPollutantData.map((city) => (
-                  <Bar
-                    key={city.cityId}
-                    dataKey={city.cityName}
-                    fill={city.color}
-                    radius={[4, 4, 0, 0]}
-                    maxBarSize={36}
-                  />
+                {singlePollutantChartData.map((entry, idx) => (
+                  <Cell key={`cell-${idx}`} fill={entry.color} />
                 ))}
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         </div>
-      ) : (
-        /* Single Pollutant Chart */
-        <div className="space-y-4">
-          <div className="flex items-center justify-between text-xs text-gray-500 bg-blue-50/50 p-2.5 rounded-xl border border-blue-100">
-            <span className="font-semibold text-blue-900">
-              {selectedPDef?.fullName} ({selectedPDef?.label})
-            </span>
-            <span className="font-medium text-blue-700">
-              Unit: <strong>{selectedPDef?.defaultUnit}</strong>
-            </span>
-          </div>
-
-          <div className="h-80 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={singlePollutantChartData}
-                margin={{ top: 20, right: 30, left: 10, bottom: 25 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                <XAxis
-                  dataKey="cityName"
-                  tick={{ fontSize: 12, fill: '#374151', fontWeight: 500 }}
-                  tickLine={false}
-                  axisLine={{ stroke: '#e5e7eb' }}
-                />
-                <YAxis
-                  tick={{ fontSize: 11, fill: '#6b7280' }}
-                  tickLine={false}
-                  axisLine={{ stroke: '#e5e7eb' }}
-                  label={{
-                    value: `Concentration (${selectedPDef?.defaultUnit})`,
-                    angle: -90,
-                    position: 'insideLeft',
-                    style: { textAnchor: 'middle', fill: '#9ca3af', fontSize: 11 },
-                    offset: 0,
-                  }}
-                />
-                <Tooltip content={<SinglePollutantTooltip />} cursor={{ fill: 'rgba(243, 244, 246, 0.6)' }} />
-                <Bar
-                  dataKey="value"
-                  radius={[8, 8, 0, 0]}
-                  maxBarSize={60}
-                >
-                  {singlePollutantChartData.map((entry, idx) => (
-                    <Cell key={`cell-${idx}`} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      )}
+      </div>
 
       {/* Multi-City Pollutant Matrix Table */}
       <div className="overflow-x-auto pt-2">
@@ -308,42 +204,6 @@ export default function PollutantComparisonChart({
             ))}
           </tbody>
         </table>
-      </div>
-    </div>
-  );
-}
-
-/**
- * Custom Tooltip for Grouped Pollutant Chart
- */
-function GroupedTooltip({ active, payload, label }) {
-  if (!active || !payload || !payload.length) return null;
-  const item = payload[0]?.payload;
-
-  return (
-    <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-3.5 text-xs min-w-48 z-50">
-      <div className="border-b border-gray-100 pb-2 mb-2">
-        <p className="font-bold text-gray-900 text-sm">{item?.fullName || label}</p>
-        <p className="text-[11px] text-gray-500">
-          Unit: <strong>{item?.unit}</strong>
-        </p>
-      </div>
-
-      <div className="space-y-1.5">
-        {payload.map((entry) => (
-          <div key={entry.name} className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-1.5 min-w-0">
-              <span
-                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                style={{ backgroundColor: entry.color }}
-              />
-              <span className="text-gray-700 truncate">{entry.name}:</span>
-            </div>
-            <span className="font-bold text-gray-900">
-              {entry.value != null ? `${entry.value} ${item?.unit}` : 'Not reported'}
-            </span>
-          </div>
-        ))}
       </div>
     </div>
   );

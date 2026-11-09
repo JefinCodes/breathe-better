@@ -150,7 +150,7 @@ export default function LocationComparison() {
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wide mb-2">
               <ArrowLeftRight className="w-3.5 h-3.5" />
-              Page 3 • Location Comparison
+              Location Comparison
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
               Compare Air Quality Across Cities
