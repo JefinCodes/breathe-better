@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Clock } from 'lucide-react';
+import { Map, Clock } from 'lucide-react';
 
 import { getHeatmapMetadata } from '../api/airQuality';
 import Navbar from '../components/Navbar';
@@ -42,13 +42,19 @@ export default function HeatMap() {
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-5 pb-16">
         {/* Page Title & Last Update */}
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-            Pollution Heat Map
-          </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold tracking-wide">
+              <Map className="w-3.5 h-3.5" />
+              HEAT MAP
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+              Pollution Heat Map
+            </h1>
+          </div>
 
           {metadata?.lastUpdateTime && (
-            <div className="flex items-center gap-1.5 text-xs text-gray-500 bg-white border border-gray-200 rounded-lg px-3 py-1.5 shadow-xs">
+            <div className="flex items-center gap-1.5 text-xs text-gray-500 bg-white border border-gray-200 rounded-lg px-3 py-1.5 shadow-xs self-start sm:self-auto">
               <Clock className="w-3.5 h-3.5 text-gray-400" />
               <span>Updated {formatTime(metadata.lastUpdateTime)}</span>
             </div>
