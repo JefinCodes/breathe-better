@@ -1,4 +1,4 @@
-import { MapPin, Map, LayoutDashboard, ArrowLeftRight, History, BookOpen } from 'lucide-react';
+import { Map, LayoutDashboard, ArrowLeftRight, History, BookOpen } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 /**
@@ -19,10 +19,12 @@ export default function Navbar({ rightContent }) {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
         {/* Brand logo & name */}
         <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-          <NavLink to="/" className="flex items-center gap-2 group flex-shrink-0">
-            <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center shadow-sm group-hover:bg-emerald-700 transition-colors">
-              <MapPin className="w-4 h-4 text-white" />
-            </div>
+          <NavLink to="/" className="flex items-center gap-2.5 group flex-shrink-0">
+            <img
+              src="/logo.png"
+              alt="Breathe Better"
+              className="w-8 h-8 object-cover rounded-lg group-hover:opacity-90 transition-opacity"
+            />
             <span className="font-bold text-gray-900 text-base tracking-tight hidden sm:inline">
               Breathe Better
             </span>
