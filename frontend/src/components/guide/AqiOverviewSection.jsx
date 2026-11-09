@@ -30,15 +30,14 @@ export default function AqiOverviewSection() {
             </div>
 
             <p className="text-sm text-gray-600 leading-relaxed">
-              The <strong className="text-gray-900 font-semibold">Air Quality Index (AQI)</strong> is a daily
+              The Air Quality Index (AQI) is a daily
               reporting tool used to communicate how clean or polluted the outdoor air is and what associated
               health effects might be a concern for you.
             </p>
 
             <p className="text-sm text-gray-600 leading-relaxed">
               Instead of presenting complex scientific measurements, the AQI translates air pollution data into a
-              single, easy-to-understand number on a scale from{' '}
-              <strong className="text-gray-900 font-semibold">0 to 500</strong>, paired with a descriptive category
+              single, easy-to-understand number on a scale from 0 to 500, paired with a descriptive category
               and color code. The higher the AQI value, the greater the level of air pollution and the higher the
               health risk.
             </p>
@@ -79,23 +78,19 @@ export default function AqiOverviewSection() {
             </div>
 
             <p className="text-sm text-gray-600 leading-relaxed">
-              The <strong className="text-gray-900 font-semibold">Central Pollution Control Board (CPCB)</strong> is
+              The Central Pollution Control Board (CPCB) is
               India’s apex statutory organization under the{' '}
-              <strong className="text-gray-900 font-semibold">
-                Ministry of Environment, Forest and Climate Change (MoEFCC)
-              </strong>.
+              Ministry of Environment, Forest and Climate Change (MoEFCC).
             </p>
 
             <p className="text-sm text-gray-600 leading-relaxed">
-              Established in <strong className="text-gray-900 font-semibold">1974</strong>, the CPCB monitors
+              Established in 1974, the CPCB monitors
               environmental standards across the country and operates the{' '}
-              <strong className="text-gray-900 font-semibold">
-                National Air Quality Monitoring Programme (NAMP)
-              </strong>.
+              National Air Quality Monitoring Programme (NAMP).
             </p>
 
             <p className="text-sm text-gray-600 leading-relaxed">
-              Under the <strong className="text-gray-900 font-semibold">Swachh Bharat Abhiyan</strong>, the CPCB
+              Under the Swachh Bharat Abhiyan, the CPCB
               launched the National Air Quality Index with the motto{' '}
               <span className="inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold text-xs border border-blue-200/60">
                 &quot;One Number – One Colour – One Description&quot;
