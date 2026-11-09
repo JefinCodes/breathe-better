@@ -22,14 +22,6 @@ import InteractiveAqiExplorer from '../components/guide/InteractiveAqiExplorer';
  * - Interactive AQI Scale explorer
  */
 export default function AqiGuide() {
-  const quickLinks = [
-    { href: '#overview', label: '1. What is AQI & CPCB' },
-    { href: '#calculation', label: '2. Calculation Method' },
-    { href: '#pollutants', label: '3. The 8 Pollutants' },
-    { href: '#categories', label: '4. Categories & Health Guidelines' },
-    { href: '#interactive', label: '5. Interactive Scale' },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
@@ -39,7 +31,7 @@ export default function AqiGuide() {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wide">
             <BookOpen className="w-3.5 h-3.5" />
-            Page 5 • Understanding India’s AQI
+            Understanding India’s AQI
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
             Understanding India’s Air Quality Index (AQI)
@@ -47,24 +39,6 @@ export default function AqiGuide() {
           <p className="text-xs sm:text-sm text-gray-500 max-w-3xl leading-relaxed">
             Discover how the Central Pollution Control Board (CPCB) measures environmental safety, aggregates 8 major air pollutants into standardized sub-indices, and translates complex scientific metrics into actionable health advisories.
           </p>
-
-          {/* Quick-Jump In-Page Anchor Navigation */}
-          <nav aria-label="Page subnavigation" className="pt-3">
-            <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1">
-              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
-                Jump To:
-              </span>
-              {quickLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-gray-200/80 text-gray-700 hover:text-blue-600 hover:border-blue-300 transition-colors whitespace-nowrap shadow-2xs"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </nav>
         </div>
 
         {/* Section 1: Overview & What is CPCB */}

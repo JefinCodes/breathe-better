@@ -112,44 +112,6 @@ export default function CalculationMethodologySection() {
           );
         })}
       </div>
-
-      {/* Mathematical Logic & Prominent Pollutant Callout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pt-2">
-        {/* Sub-Index Linear Formula */}
-        <div className="p-4 rounded-xl bg-blue-50/60 border border-blue-100 text-xs text-gray-700 space-y-2">
-          <div className="flex items-center gap-2 font-bold text-blue-900">
-            <span className="w-5 h-5 rounded-md bg-blue-600 text-white flex items-center justify-center text-[10px]">
-              ƒ(x)
-            </span>
-            <span>Sub-Index Interpolation Formula</span>
-          </div>
-          <p className="text-gray-600">
-            For pollutant concentration <code className="px-1 py-0.5 bg-white rounded border border-blue-200 text-blue-800 font-mono">C</code> falling between breakpoint limits <code className="px-1 py-0.5 bg-white rounded border border-blue-200 text-blue-800 font-mono">[B_lo, B_hi]</code> corresponding to AQI sub-range <code className="px-1 py-0.5 bg-white rounded border border-blue-200 text-blue-800 font-mono">[I_lo, I_hi]</code>:
-          </p>
-          <div className="p-2.5 bg-white rounded-lg border border-blue-200 font-mono text-[11px] text-blue-950 font-semibold text-center overflow-x-auto">
-            I = [ (I_hi - I_lo) / (B_hi - B_lo) ] × (C - B_lo) + I_lo
-          </div>
-        </div>
-
-        {/* Max Rule & Prominent Pollutant */}
-        <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 text-xs text-gray-700 space-y-2">
-          <div className="flex items-center gap-2 font-bold text-emerald-900">
-            <span className="w-5 h-5 rounded-md bg-emerald-600 text-white flex items-center justify-center text-[10px]">
-              MAX
-            </span>
-            <span>Final AQI &amp; Prominent Pollutant Determination</span>
-          </div>
-          <p className="text-gray-600">
-            The overall AQI is governed by the single pollutant presenting the worst environmental risk:
-          </p>
-          <div className="p-2.5 bg-white rounded-lg border border-emerald-200 font-mono text-[11px] text-emerald-950 font-semibold text-center">
-            Overall AQI = max( I_PM2.5, I_PM10, I_NO2, I_SO2, I_CO, I_O3, I_NH3, I_Pb )
-          </div>
-          <p className="text-[11px] text-emerald-800 font-medium">
-            Whichever pollutant yields this maximum sub-index is highlighted on dashboards as the <strong>Prominent Pollutant</strong>.
-          </p>
-        </div>
-      </div>
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import { Info, Building2, Calendar, Award, Sparkles, ShieldCheck } from 'lucide-react';
+import { Info, Building2, Calendar, Award, ShieldCheck } from 'lucide-react';
 
 /**
  * AqiOverviewSection
@@ -118,37 +118,6 @@ export default function AqiOverviewSection() {
               <Award className="w-3.5 h-3.5 text-gray-500" />
               NAMP Operator
             </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Motto Highlight Banner */}
-      <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 rounded-2xl p-6 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-5">
-        <div className="space-y-1 text-center sm:text-left">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[11px] font-bold uppercase tracking-wider backdrop-blur-xs">
-            <Sparkles className="w-3 h-3 text-amber-300" />
-            National AQI Philosophy
-          </div>
-          <h3 className="text-xl sm:text-2xl font-black tracking-tight">
-            &quot;One Number – One Colour – One Description&quot;
-          </h3>
-          <p className="text-xs sm:text-sm text-blue-100 max-w-xl">
-            Promulgated under Swachh Bharat Abhiyan to replace complicated parts-per-million and micrograms-per-cubic-meter values with a unified public-health metric that everyone can immediately understand.
-          </p>
-        </div>
-
-        <div className="flex-shrink-0 grid grid-cols-3 sm:flex items-center gap-2 text-center">
-          <div className="px-3.5 py-2.5 bg-white/10 rounded-xl backdrop-blur-xs border border-white/20">
-            <span className="block text-lg font-black">1</span>
-            <span className="text-[10px] text-blue-200 uppercase font-semibold">Number</span>
-          </div>
-          <div className="px-3.5 py-2.5 bg-white/10 rounded-xl backdrop-blur-xs border border-white/20">
-            <span className="block text-lg font-black">1</span>
-            <span className="text-[10px] text-blue-200 uppercase font-semibold">Colour</span>
-          </div>
-          <div className="px-3.5 py-2.5 bg-white/10 rounded-xl backdrop-blur-xs border border-white/20">
-            <span className="block text-lg font-black">1</span>
-            <span className="text-[10px] text-blue-200 uppercase font-semibold">Description</span>
           </div>
         </div>
       </div>
