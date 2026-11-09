@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import HeatMap from './pages/HeatMap';
+import LocationComparison from './pages/LocationComparison';
 
 /**
  * Main application router for Breathe Better.
  * Route / -> Page 1: Dashboard (Stages 1, 2, 3)
  * Route /map -> Page 2: Pollution Heat Map (Stage 4)
+ * Route /compare -> Page 3: Location Comparison (Stage 5)
  */
 export default function App() {
   return (
@@ -14,6 +16,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/map" element={<HeatMap />} />
         <Route path="/heatmap" element={<Navigate to="/map" replace />} />
+        <Route path="/compare" element={<LocationComparison />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

@@ -1,9 +1,10 @@
-import { MapPin, Map, LayoutDashboard } from 'lucide-react';
+import { MapPin, Map, LayoutDashboard, ArrowLeftRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 /**
  * Shared top navigation bar for Breathe Better.
- * Offers seamless switching between Dashboard (Page 1) and Pollution Heat Map (Page 2).
+ * Offers seamless switching between Dashboard (Page 1), Pollution Heat Map (Page 2),
+ * and Location Comparison (Page 3).
  *
  * @param {object} props
  * @param {React.ReactNode} [props.rightContent] - Optional right-aligned action (e.g. Change Location button)
@@ -52,6 +53,20 @@ export default function Navbar({ rightContent }) {
             >
               <Map className="w-3.5 h-3.5" />
               <span>Pollution Heat Map</span>
+            </NavLink>
+
+            <NavLink
+              to="/compare"
+              className={({ isActive }) =>
+                `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  isActive
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
+                }`
+              }
+            >
+              <ArrowLeftRight className="w-3.5 h-3.5" />
+              <span>Compare</span>
             </NavLink>
           </nav>
         </div>

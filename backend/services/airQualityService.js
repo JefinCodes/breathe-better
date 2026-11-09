@@ -124,8 +124,10 @@ async function getHistory(latitude, longitude, startTime, endTime) {
   do {
     const body = {
       location: { latitude, longitude },
-      startTime,
-      endTime,
+      period: {
+        startTime,
+        endTime,
+      },
       extraComputations: config.extraComputations.historical,
       universalAqi: true,
       languageCode: 'en',

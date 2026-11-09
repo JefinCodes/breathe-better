@@ -16,6 +16,7 @@ export default function CityAutocomplete({
   placeholder = 'Search for a city...',
   className = '',
   label,
+  clearOnSelect = false,
 }) {
   const listboxId = useId();
   const inputRef = useRef(null);
@@ -63,9 +64,15 @@ export default function CityAutocomplete({
   }
 
   function handleSelect(city) {
-    setSelectedCity(city);
-    setIsOpen(false);
-    clearSearch();
+    if (clearOnSelect) {
+      setSelectedCity(null);
+      clearSearch();
+      setIsOpen(false);
+    } else {
+      setSelectedCity(city);
+      setIsOpen(false);
+      clearSearch();
+    }
     if (onCitySelect) onCitySelect(city);
   }
 
