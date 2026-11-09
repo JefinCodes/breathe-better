@@ -4,6 +4,7 @@ import HeatMap from './pages/HeatMap';
 import LocationComparison from './pages/LocationComparison';
 import HistoricalTracker from './pages/HistoricalTracker';
 import AqiGuide from './pages/AqiGuide';
+import ChatbotWidget from './components/chatbot/ChatbotWidget';
 
 /**
  * Main application router for Breathe Better.
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/standards" element={<Navigate to="/guide" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <ChatbotWidget />
     </BrowserRouter>
   );
 }

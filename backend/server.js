@@ -5,9 +5,16 @@ const cors = require('cors');
 
 const citiesRouter = require('./routes/cities');
 const airQualityRouter = require('./routes/airQuality');
+const chatbotRouter = require('./routes/chatbot');
+const { initializeChatbotSchema } = require('./db/chatbotDb');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Initialize Neon PostgreSQL or memory store on boot
+initializeChatbotSchema().catch((err) => {
+  console.warn('[server] Chatbot schema init warning:', err.message);
+});
 
 // ---------------------------------------------------------------------------
 // Middleware
@@ -28,7 +35,7 @@ app.use(cors({
       callback(new Error(`CORS: origin '${origin}' not allowed`));
     }
   },
-  methods: ['GET'],
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
 }));
 
 app.use(express.json());
@@ -39,6 +46,7 @@ app.use(express.json());
 
 app.use('/api/cities', citiesRouter);
 app.use('/api/air-quality', airQualityRouter);
+app.use('/api/chatbot', chatbotRouter);
 
 // Health check — useful for Render's health probe
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
