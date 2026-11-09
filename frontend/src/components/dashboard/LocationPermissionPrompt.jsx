@@ -17,11 +17,11 @@ export default function LocationPermissionPrompt({ geoStatus, onCitySelect }) {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         {/* Brand + icon */}
         <div className="text-center mb-7">
-          <div className="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
             {isDenied ? (
-              <Navigation className="w-7 h-7 text-blue-400" />
+              <Navigation className="w-7 h-7 text-emerald-400" />
             ) : (
-              <MapPin className="w-7 h-7 text-blue-500" />
+              <MapPin className="w-7 h-7 text-emerald-500" />
             )}
           </div>
           <h1 className="text-xl font-bold text-gray-900 mb-1">Breathe Better</h1>

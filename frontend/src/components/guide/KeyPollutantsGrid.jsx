@@ -60,10 +60,10 @@ export default function KeyPollutantsGrid() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+              <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
                 <Wind className="w-3.5 h-3.5" />
               </span>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">
                 Criteria Pollutants
               </span>
             </div>
@@ -80,7 +80,7 @@ export default function KeyPollutantsGrid() {
             <span className="px-3 py-1.5 rounded-xl bg-gray-100 text-gray-700 text-xs font-semibold">
               8 Standard Pollutants
             </span>
-            <span className="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 text-xs font-semibold">
+            <span className="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 text-xs font-semibold">
               Rolling 24h &amp; 8h Averages
             </span>
           </div>
@@ -96,7 +96,7 @@ export default function KeyPollutantsGrid() {
               onClick={() => setActiveFilter(tab.id)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 activeFilter === tab.id
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-emerald-600 text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200/80'
               }`}
             >
@@ -117,7 +117,7 @@ export default function KeyPollutantsGrid() {
               {/* Header: Symbol & Name & Averaging Window */}
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 font-extrabold flex items-center justify-center text-lg shadow-xs group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 font-extrabold flex items-center justify-center text-lg shadow-xs group-hover:scale-105 transition-transform">
                     {pollutant.symbol}
                   </div>
                   <div>

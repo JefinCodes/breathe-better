@@ -16,11 +16,11 @@ export default function AqiOverviewSection() {
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-7 flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
                 <Info className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 block">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 block">
                   Core Concept
                 </span>
                 <h2 className="text-xl font-extrabold text-gray-900 tracking-tight">
@@ -92,7 +92,7 @@ export default function AqiOverviewSection() {
             <p className="text-sm text-gray-600 leading-relaxed">
               Under the Swachh Bharat Abhiyan, the CPCB
               launched the National Air Quality Index with the motto{' '}
-              <span className="inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold text-xs border border-blue-200/60">
+              <span className="inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold text-xs border border-emerald-200/60">
                 &quot;One Number – One Colour – One Description&quot;
               </span>{' '}
               to help citizens easily assess air quality in their neighborhoods.

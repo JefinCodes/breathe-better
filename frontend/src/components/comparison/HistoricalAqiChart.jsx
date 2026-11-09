@@ -95,7 +95,7 @@ export default function HistoricalAqiChart({
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-gray-100 pb-4">
         <div>
           <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
-            <History className="w-5 h-5 text-blue-600" />
+            <History className="w-5 h-5 text-emerald-600" />
             D. Historical AQI Trends
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -112,7 +112,7 @@ export default function HistoricalAqiChart({
               onClick={() => onPresetChange(7)}
               className={`px-3 py-1 font-semibold rounded-lg transition-all ${
                 activePreset === 7
-                  ? 'bg-white text-blue-600 shadow-xs'
+                  ? 'bg-white text-emerald-600 shadow-xs'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -123,7 +123,7 @@ export default function HistoricalAqiChart({
               onClick={() => onPresetChange(14)}
               className={`px-3 py-1 font-semibold rounded-lg transition-all ${
                 activePreset === 14
-                  ? 'bg-white text-blue-600 shadow-xs'
+                  ? 'bg-white text-emerald-600 shadow-xs'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -134,7 +134,7 @@ export default function HistoricalAqiChart({
               onClick={() => onPresetChange(30)}
               className={`px-3 py-1 font-semibold rounded-lg transition-all ${
                 activePreset === 30
-                  ? 'bg-white text-blue-600 shadow-xs'
+                  ? 'bg-white text-emerald-600 shadow-xs'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -166,7 +166,7 @@ export default function HistoricalAqiChart({
 
       {/* Loading Banner */}
       {isAnyLoading && (
-        <div className="flex items-center justify-center gap-2 py-4 text-xs text-blue-600 bg-blue-50/50 rounded-xl">
+        <div className="flex items-center justify-center gap-2 py-4 text-xs text-emerald-600 bg-emerald-50/50 rounded-xl">
           <Loader2 className="w-4 h-4 animate-spin" />
           <span>Synchronizing historical observations for selected cities…</span>
         </div>

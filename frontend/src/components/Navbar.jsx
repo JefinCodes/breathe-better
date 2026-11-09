@@ -20,7 +20,7 @@ export default function Navbar({ rightContent }) {
         {/* Brand logo & name */}
         <div className="flex items-center gap-4 sm:gap-6 min-w-0">
           <NavLink to="/" className="flex items-center gap-2 group flex-shrink-0">
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition-colors">
+            <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center shadow-sm group-hover:bg-emerald-700 transition-colors">
               <MapPin className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-gray-900 text-base tracking-tight hidden sm:inline">
@@ -36,7 +36,7 @@ export default function Navbar({ rightContent }) {
               className={({ isActive }) =>
                 `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-white text-blue-600 shadow-sm'
+                    ? 'bg-white text-emerald-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
                 }`
               }
@@ -50,7 +50,7 @@ export default function Navbar({ rightContent }) {
               className={({ isActive }) =>
                 `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-white text-blue-600 shadow-sm'
+                    ? 'bg-white text-emerald-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
                 }`
               }
@@ -64,7 +64,7 @@ export default function Navbar({ rightContent }) {
               className={({ isActive }) =>
                 `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-white text-blue-600 shadow-sm'
+                    ? 'bg-white text-emerald-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
                 }`
               }
@@ -78,7 +78,7 @@ export default function Navbar({ rightContent }) {
               className={({ isActive }) =>
                 `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-white text-blue-600 shadow-sm'
+                    ? 'bg-white text-emerald-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
                 }`
               }
@@ -92,7 +92,7 @@ export default function Navbar({ rightContent }) {
               className={({ isActive }) =>
                 `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-white text-blue-600 shadow-sm'
+                    ? 'bg-white text-emerald-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
                 }`
               }

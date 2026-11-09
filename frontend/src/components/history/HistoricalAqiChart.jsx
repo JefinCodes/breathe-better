@@ -33,7 +33,7 @@ export default function HistoricalAqiChart({
   if (isLoading) {
     return (
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col items-center justify-center min-h-[380px]">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-3" />
+        <Loader2 className="w-8 h-8 text-emerald-600 animate-spin mb-3" />
         <p className="text-sm font-semibold text-gray-700">Loading historical air quality observations…</p>
         <p className="text-xs text-gray-400 mt-1">Retrieving hourly historical data from Google API in IST</p>
       </div>
@@ -57,11 +57,11 @@ export default function HistoricalAqiChart({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-gray-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
               3
             </span>
             <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
-              <History className="w-4 h-4 text-blue-600" />
+              <History className="w-4 h-4 text-emerald-600" />
               <span>Historical AQI Trajectory</span>
               {cityName && <span className="text-gray-400 font-normal">({cityName})</span>}
             </h2>
@@ -73,7 +73,7 @@ export default function HistoricalAqiChart({
 
         {/* Legend info badge */}
         <div className="flex items-center gap-2 self-start sm:self-auto text-xs text-gray-500">
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-600" />
+          <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-600" />
           <span className="font-semibold text-gray-700">{scaleName}</span>
           <span className="text-gray-300">|</span>
           <span>{validPoints} of {chartData.length} hrs valid</span>
@@ -138,10 +138,10 @@ export default function HistoricalAqiChart({
                 type="monotone"
                 dataKey="aqi"
                 name="Hourly AQI"
-                stroke="#2563eb"
+                stroke="#059669"
                 strokeWidth={2.5}
                 dot={false}
-                activeDot={{ r: 5, fill: '#2563eb', stroke: '#fff', strokeWidth: 2 }}
+                activeDot={{ r: 5, fill: '#059669', stroke: '#fff', strokeWidth: 2 }}
                 connectNulls={false}
               />
             </LineChart>

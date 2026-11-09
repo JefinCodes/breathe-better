@@ -174,8 +174,8 @@ export default function StaticHeatmap({ metric }) {
       {/* Loading overlay */}
       {isLoading && (
         <div className="absolute inset-0 z-20 bg-white/75 backdrop-blur-[2px] flex flex-col items-center justify-center p-6 transition-all">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-3 shadow-sm">
-            <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-3 shadow-sm">
+            <Loader2 className="w-6 h-6 text-emerald-600 animate-spin" />
           </div>
           <p className="text-sm font-semibold text-gray-800">
             Loading heat map…
@@ -198,7 +198,7 @@ export default function StaticHeatmap({ metric }) {
           <button
             type="button"
             onClick={handleRetry}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Retry Loading</span>

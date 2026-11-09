@@ -25,7 +25,7 @@ export default function ComparisonSummaryCards({
             Current air quality index values and dominant pollutants for selected cities.
           </p>
         </div>
-        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">
+        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
           {selectedCities.length} {selectedCities.length === 1 ? 'City' : 'Cities'} Monitored
         </span>
       </div>
@@ -89,7 +89,7 @@ export default function ComparisonSummaryCards({
               {/* Card Body */}
               {isLoading ? (
                 <div className="py-8 flex flex-col items-center justify-center text-gray-400">
-                  <Loader2 className="w-6 h-6 animate-spin text-blue-500 mb-2" />
+                  <Loader2 className="w-6 h-6 animate-spin text-emerald-500 mb-2" />
                   <span className="text-xs font-medium">Loading conditions…</span>
                 </div>
               ) : isError ? (

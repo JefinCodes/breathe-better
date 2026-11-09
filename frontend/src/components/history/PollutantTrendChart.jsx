@@ -48,11 +48,11 @@ export default function PollutantTrendChart({
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-3 border-b border-gray-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
               4
             </span>
             <h3 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-blue-600" />
+              <TrendingUp className="w-4 h-4 text-emerald-600" />
               <span>{label} Concentration Trend</span>
               <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 font-normal">
                 {unit}

@@ -80,7 +80,7 @@ export default function DateRangeSelector({
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
               2
             </span>
             <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
@@ -94,7 +94,7 @@ export default function DateRangeSelector({
 
         {/* IST notice badge */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-50 border border-gray-200/80 text-xs text-gray-600 self-start lg:self-auto">
-          <Clock className="w-3.5 h-3.5 text-blue-600" />
+          <Clock className="w-3.5 h-3.5 text-emerald-600" />
           <span>Interpreted & displayed in <strong>IST (UTC+05:30)</strong></span>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function DateRangeSelector({
             onClick={() => handlePresetClick(7)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activePreset === 7
-                ? 'bg-white text-blue-600 shadow-xs'
+                ? 'bg-white text-emerald-600 shadow-xs'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -118,7 +118,7 @@ export default function DateRangeSelector({
             onClick={() => handlePresetClick(14)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activePreset === 14
-                ? 'bg-white text-blue-600 shadow-xs'
+                ? 'bg-white text-emerald-600 shadow-xs'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -129,7 +129,7 @@ export default function DateRangeSelector({
             onClick={() => handlePresetClick(30)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activePreset === 30
-                ? 'bg-white text-blue-600 shadow-xs'
+                ? 'bg-white text-emerald-600 shadow-xs'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >

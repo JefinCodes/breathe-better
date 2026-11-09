@@ -29,7 +29,7 @@ export default function AqiGuide() {
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-8 pb-20">
         {/* Page Hero Header */}
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wide">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide">
             <BookOpen className="w-3.5 h-3.5" />
             Understanding India’s AQI
           </div>
@@ -58,7 +58,7 @@ export default function AqiGuide() {
 
         {/* Bottom Navigation / Links to App Features */}
         <div className="bg-gradient-to-br from-gray-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white space-y-4 shadow-sm">
-          <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="w-4 h-4" />
             Breathe Better • Practical Next Steps
           </div>
@@ -72,7 +72,7 @@ export default function AqiGuide() {
           <div className="pt-2 flex flex-wrap gap-3">
             <NavLink
               to="/"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 font-semibold text-xs text-white transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold text-xs text-white transition-colors"
             >
               <span>Live Dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />

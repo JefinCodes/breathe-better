@@ -86,7 +86,7 @@ export default function ForecastSection({ forecast, isLoading, isError, onRetry 
           {onRetry && (
             <button
               onClick={onRetry}
-              className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 font-medium"
+              className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 font-medium"
             >
               <RefreshCw className="w-3 h-3" />
               Retry

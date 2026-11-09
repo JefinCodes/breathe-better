@@ -84,7 +84,7 @@ export default function PollutantComparisonChart({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-4">
         <div>
           <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
-            <Layers className="w-5 h-5 text-blue-600" />
+            <Layers className="w-5 h-5 text-emerald-600" />
             C. Pollutant-Wise Comparison
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -101,7 +101,7 @@ export default function PollutantComparisonChart({
               onClick={() => setActiveTab(p.code)}
               className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === p.code
-                  ? 'bg-white text-blue-600 shadow-xs'
+                  ? 'bg-white text-emerald-600 shadow-xs'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-white/40'
               }`}
             >
@@ -113,11 +113,11 @@ export default function PollutantComparisonChart({
 
       {/* Single Pollutant Chart */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between text-xs text-gray-500 bg-blue-50/50 p-2.5 rounded-xl border border-blue-100">
-          <span className="font-semibold text-blue-900">
+        <div className="flex items-center justify-between text-xs text-gray-500 bg-emerald-50/50 p-2.5 rounded-xl border border-emerald-100">
+          <span className="font-semibold text-emerald-900">
             {selectedPDef?.fullName} ({selectedPDef?.label})
           </span>
-          <span className="font-medium text-blue-700">
+          <span className="font-medium text-emerald-700">
             Unit: <strong>{selectedPDef?.defaultUnit}</strong>
           </span>
         </div>

@@ -74,7 +74,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Average AQI
             </span>
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <Activity className="w-4 h-4" />
             </div>
           </div>
@@ -177,7 +177,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Available Observations
             </span>
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <Layers className="w-4 h-4" />
             </div>
           </div>

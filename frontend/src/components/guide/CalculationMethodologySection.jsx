@@ -18,10 +18,10 @@ export default function CalculationMethodologySection() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-5 border-b border-gray-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
               <Calculator className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">
               CPCB Methodology
             </span>
           </div>
@@ -67,12 +67,12 @@ export default function CalculationMethodologySection() {
           return (
             <div
               key={item.step}
-              className="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex flex-col justify-between relative hover:border-blue-200 transition-colors group"
+              className="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex flex-col justify-between relative hover:border-emerald-200 transition-colors group"
             >
               <div className="space-y-3">
                 {/* Step pill */}
                 <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-100 text-blue-800 font-bold text-xs">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs">
                     {item.step === '1' && <Clock className="w-3.5 h-3.5" />}
                     {item.step === '2' && <Binary className="w-3.5 h-3.5" />}
                     {item.step === '3' && <Award className="w-3.5 h-3.5" />}
@@ -88,7 +88,7 @@ export default function CalculationMethodologySection() {
                   <h3 className="text-base font-bold text-gray-900 tracking-tight">
                     {item.title}
                   </h3>
-                  <span className="text-xs font-medium text-blue-600 block mt-0.5">
+                  <span className="text-xs font-medium text-emerald-600 block mt-0.5">
                     {item.summary}
                   </span>
                 </div>

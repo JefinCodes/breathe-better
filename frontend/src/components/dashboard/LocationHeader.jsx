@@ -18,11 +18,11 @@ export default function LocationHeader({ location }) {
 
   return (
     <div className="flex items-start gap-3">
-      <div className="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 border border-blue-100">
+      <div className="w-9 h-9 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 border border-emerald-100">
         {isCurrent ? (
-          <Navigation className="w-4 h-4 text-blue-600 fill-blue-50" />
+          <Navigation className="w-4 h-4 text-emerald-600 fill-emerald-50" />
         ) : (
-          <MapPin className="w-4 h-4 text-blue-600" />
+          <MapPin className="w-4 h-4 text-emerald-600" />
         )}
       </div>
       <div>

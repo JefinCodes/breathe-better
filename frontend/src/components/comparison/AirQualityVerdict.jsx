@@ -20,7 +20,7 @@ export default function AirQualityVerdict({
   if (selectedCities.length === 1) {
     return (
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 text-center space-y-2">
-        <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto">
+        <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
           <HelpCircle className="w-5 h-5" />
         </div>
         <h3 className="text-base font-bold text-gray-900">

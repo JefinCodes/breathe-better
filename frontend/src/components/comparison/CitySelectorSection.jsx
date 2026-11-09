@@ -43,7 +43,7 @@ export default function CitySelectorSection({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-blue-600" />
+            <MapPin className="w-5 h-5 text-emerald-600" />
             Selected Locations
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -64,7 +64,7 @@ export default function CitySelectorSection({
           <button
             type="button"
             onClick={onResetDefault}
-            className="flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
+            className="flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700 px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             Reset default

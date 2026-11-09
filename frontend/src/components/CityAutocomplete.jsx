@@ -177,9 +177,9 @@ export default function CityAutocomplete({
             if (externalOnFocus) externalOnFocus(e);
           }}
           placeholder={placeholder}
-          className={`w-full pl-10 pr-10 py-2.5 text-sm rounded-xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-xs ${
+          className={`w-full pl-10 pr-10 py-2.5 text-sm rounded-xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all shadow-xs ${
             isHighlighted
-              ? 'border-2 border-blue-500 ring-4 ring-blue-100'
+              ? 'border-2 border-emerald-500 ring-4 ring-emerald-100'
               : 'border border-gray-300'
           }`}
         />
@@ -230,11 +230,11 @@ export default function CityAutocomplete({
               onMouseEnter={() => setActiveIndex(index)}
               className={`flex items-start gap-3 px-4 py-2.5 cursor-pointer transition-colors ${
                 activeIndex === index
-                  ? 'bg-blue-50 text-blue-900'
+                  ? 'bg-emerald-50 text-emerald-900'
                   : 'text-gray-800 hover:bg-gray-50'
               }`}
             >
-              <MapPin className={`w-4 h-4 mt-0.5 flex-shrink-0 ${activeIndex === index ? 'text-blue-500' : 'text-gray-400'}`} />
+              <MapPin className={`w-4 h-4 mt-0.5 flex-shrink-0 ${activeIndex === index ? 'text-emerald-500' : 'text-gray-400'}`} />
               <div>
                 <p className="text-sm font-medium leading-tight">{formatCityName(city.name)}</p>
                 <p className="text-xs text-gray-500 leading-tight mt-0.5">{city.state}</p>

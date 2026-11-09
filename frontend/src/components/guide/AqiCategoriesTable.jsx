@@ -117,7 +117,7 @@ export default function AqiCategoriesTable() {
                         {cat.impact}
                       </p>
                       <p className="text-gray-600 leading-relaxed text-xs">
-                        <span className="text-blue-600 font-semibold uppercase text-[10px] tracking-wider block">
+                        <span className="text-emerald-600 font-semibold uppercase text-[10px] tracking-wider block">
                           Guideline
                         </span>
                         {cat.guideline}
@@ -199,7 +199,7 @@ export default function AqiCategoriesTable() {
 
               {/* Guideline */}
               <div className="space-y-0.5 pt-1 border-t border-gray-100">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">
                   CPCB Health Guideline
                 </span>
                 <p className="text-xs text-gray-700 leading-relaxed">

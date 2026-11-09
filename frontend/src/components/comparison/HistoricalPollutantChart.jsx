@@ -99,7 +99,7 @@ export default function HistoricalPollutantChart({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-4">
         <div>
           <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-blue-600" />
+            <TrendingUp className="w-5 h-5 text-emerald-600" />
             E. Historical Pollutant Comparison
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -116,7 +116,7 @@ export default function HistoricalPollutantChart({
               onClick={() => setSelectedPollutantCode(p.code)}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
                 selectedPollutantCode === p.code
-                  ? 'bg-white text-blue-600 shadow-xs'
+                  ? 'bg-white text-emerald-600 shadow-xs'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-white/40'
               }`}
             >
@@ -129,7 +129,7 @@ export default function HistoricalPollutantChart({
       {/* Pollutant Info Strip */}
       <div className="flex items-center justify-between text-xs bg-gray-50 p-2.5 rounded-xl border border-gray-150">
         <div className="flex items-center gap-2">
-          <Info className="w-4 h-4 text-blue-600 flex-shrink-0" />
+          <Info className="w-4 h-4 text-emerald-600 flex-shrink-0" />
           <span className="font-semibold text-gray-800">
             {currentPollutant.fullName} ({currentPollutant.label})
           </span>

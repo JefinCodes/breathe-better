@@ -33,10 +33,10 @@ export default function InteractiveAqiExplorer() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-5 border-b border-gray-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs">
+            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
               <Sliders className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-600">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">
               Interactive Simulator
             </span>
           </div>
@@ -75,7 +75,7 @@ export default function InteractiveAqiExplorer() {
         <div className="flex items-center justify-between text-xs font-bold text-gray-500">
           <span>0 (Cleanest)</span>
           <span className="text-sm font-extrabold text-gray-900">
-            Selected AQI: <span className="font-mono text-base text-blue-600">{sliderValue}</span>
+            Selected AQI: <span className="font-mono text-base text-emerald-600">{sliderValue}</span>
           </span>
           <span>500 (Hazardous)</span>
         </div>
@@ -88,7 +88,7 @@ export default function InteractiveAqiExplorer() {
             max="500"
             value={sliderValue}
             onChange={(e) => setSliderValue(Number(e.target.value))}
-            className="w-full h-3 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-3 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             style={{
               background: `linear-gradient(to right, #00B050 0%, #00B050 10%, #92D050 10%, #92D050 20%, #FFFF00 20%, #FFFF00 40%, #FF9900 40%, #FF9900 60%, #FF0000 60%, #FF0000 80%, #C00000 80%, #C00000 100%)`,
             }}
@@ -167,7 +167,7 @@ export default function InteractiveAqiExplorer() {
             </div>
 
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700 block mb-1">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 block mb-1">
                 Official CPCB Health Advisory
               </span>
               <p className="text-xs text-gray-700 leading-relaxed bg-white/80 p-3.5 rounded-xl border border-black/5">

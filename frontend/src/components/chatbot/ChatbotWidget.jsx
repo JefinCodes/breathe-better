@@ -180,7 +180,7 @@ export default function ChatbotWidget() {
           className="mb-3 w-[calc(100vw-2.5rem)] sm:w-[410px] h-[560px] max-h-[82vh] bg-white rounded-2xl shadow-2xl border border-gray-200/90 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white p-3.5 sm:p-4 flex items-center justify-between shadow-xs">
+          <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white p-3.5 sm:p-4 flex items-center justify-between shadow-xs">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-xs border border-white/20 flex items-center justify-center flex-shrink-0 shadow-inner">
                 <Wind className="w-5 h-5 text-white" />
@@ -192,7 +192,7 @@ export default function ChatbotWidget() {
                   </h3>
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
                 </div>
-                <div className="flex items-center gap-1 text-[11px] text-blue-100 truncate">
+                <div className="flex items-center gap-1 text-[11px] text-emerald-100 truncate">
                   {lastCity ? (
                     <span className="inline-flex items-center gap-0.5 bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-medium text-white truncate">
                       <MapPin className="w-2.5 h-2.5" />
@@ -230,9 +230,9 @@ export default function ChatbotWidget() {
 
           {/* Active Context / Geolocation Banner */}
           {(userLocation || locationNotice) && (
-            <div className="bg-blue-50/90 border-b border-blue-100 px-3 py-1.5 flex items-center justify-between text-[11px] text-blue-800">
+            <div className="bg-emerald-50/90 border-b border-emerald-100 px-3 py-1.5 flex items-center justify-between text-[11px] text-emerald-800">
               <div className="flex items-center gap-1 truncate">
-                <MapPin className="w-3 h-3 text-blue-600 flex-shrink-0" />
+                <MapPin className="w-3 h-3 text-emerald-600 flex-shrink-0" />
                 <span className="truncate">
                   {locationNotice || `Current GPS: ${userLocation?.latitude}, ${userLocation?.longitude}`}
                 </span>
@@ -241,7 +241,7 @@ export default function ChatbotWidget() {
                 <button
                   type="button"
                   onClick={() => setUserLocation(null)}
-                  className="text-[10px] text-blue-600 hover:text-blue-900 font-semibold ml-2 underline"
+                  className="text-[10px] text-emerald-600 hover:text-emerald-900 font-semibold ml-2 underline"
                 >
                   Clear
                 </button>
@@ -253,7 +253,7 @@ export default function ChatbotWidget() {
           <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-3.5 bg-gray-50/50 text-xs sm:text-sm">
             {messages.length === 0 ? (
               <div className="h-full flex flex-col justify-center items-center text-center p-2 space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shadow-xs">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-xs">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <div>
@@ -276,7 +276,7 @@ export default function ChatbotWidget() {
                         key={idx}
                         type="button"
                         onClick={() => handleSendMessage(prompt)}
-                        className="text-left text-xs bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-300 text-gray-700 hover:text-blue-700 px-2.5 py-1.5 rounded-xl transition-all shadow-2xs"
+                        className="text-left text-xs bg-white hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 text-gray-700 hover:text-emerald-700 px-2.5 py-1.5 rounded-xl transition-all shadow-2xs"
                       >
                         {prompt}
                       </button>
@@ -294,7 +294,7 @@ export default function ChatbotWidget() {
                       className={`flex gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}
                     >
                       {!isUser && (
-                        <div className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 text-xs shadow-xs mt-0.5">
+                        <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 text-xs shadow-xs mt-0.5">
                           <Bot className="w-4 h-4" />
                         </div>
                       )}
@@ -302,7 +302,7 @@ export default function ChatbotWidget() {
                       <div
                         className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 shadow-2xs leading-relaxed ${
                           isUser
-                            ? 'bg-blue-600 text-white rounded-tr-xs'
+                            ? 'bg-emerald-600 text-white rounded-tr-xs'
                             : msg.isError
                             ? 'bg-red-50 text-red-700 border border-red-200 rounded-tl-xs'
                             : 'bg-white text-gray-800 border border-gray-200/80 rounded-tl-xs'
@@ -319,7 +319,7 @@ export default function ChatbotWidget() {
                         {/* Timestamp & Tool badges */}
                         <div
                           className={`mt-1 text-[10px] flex items-center justify-between gap-2 ${
-                            isUser ? 'text-blue-100' : 'text-gray-400'
+                            isUser ? 'text-emerald-100' : 'text-gray-400'
                           }`}
                         >
                           <span>
@@ -337,7 +337,7 @@ export default function ChatbotWidget() {
                       </div>
 
                       {isUser && (
-                        <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 text-xs shadow-xs mt-0.5">
+                        <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 text-xs shadow-xs mt-0.5">
                           <User className="w-4 h-4" />
                         </div>
                       )}
@@ -348,11 +348,11 @@ export default function ChatbotWidget() {
                 {/* Loading indicator */}
                 {isLoading && (
                   <div className="flex gap-2 justify-start items-center">
-                    <div className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center flex-shrink-0 text-xs shadow-xs">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 text-xs shadow-xs">
                       <Bot className="w-4 h-4" />
                     </div>
                     <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-xs px-3.5 py-2 shadow-2xs flex items-center gap-2">
-                      <Loader2 className="w-3.5 h-3.5 text-blue-600 animate-spin" />
+                      <Loader2 className="w-3.5 h-3.5 text-emerald-600 animate-spin" />
                       <span className="text-xs text-gray-500 font-medium">
                         Fetching air quality insights...
                       </span>

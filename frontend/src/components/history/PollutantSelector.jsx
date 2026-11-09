@@ -46,7 +46,7 @@ export default function PollutantSelector({
               onClick={() => onSelectPollutant(pollutant.code.toLowerCase())}
               className={`flex flex-col items-start p-3 rounded-xl border text-left transition-all ${
                 isSelected
-                  ? 'bg-blue-50/70 border-blue-500 ring-2 ring-blue-500/20 shadow-xs'
+                  ? 'bg-emerald-50/70 border-emerald-500 ring-2 ring-emerald-500/20 shadow-xs'
                   : 'bg-white border-gray-200/80 hover:bg-gray-50 hover:border-gray-300'
               }`}
             >
@@ -56,7 +56,7 @@ export default function PollutantSelector({
                   style={{ backgroundColor: pollutant.color }}
                 />
                 {isSelected && (
-                  <span className="text-blue-600">
+                  <span className="text-emerald-600">
                     <Check className="w-3.5 h-3.5" />
                   </span>
                 )}

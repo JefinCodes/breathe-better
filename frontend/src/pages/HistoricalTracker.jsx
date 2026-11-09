@@ -134,7 +134,7 @@ export default function HistoricalTracker() {
           >
             <RefreshCw
               className={`w-3.5 h-3.5 ${
-                historyQuery.isFetching ? 'animate-spin text-blue-600' : ''
+                historyQuery.isFetching ? 'animate-spin text-emerald-600' : ''
               }`}
             />
             <span className="hidden sm:inline">Refresh Data</span>
@@ -146,7 +146,7 @@ export default function HistoricalTracker() {
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6 pb-20">
         {/* Page Header */}
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wide mb-2">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide mb-2">
             <History className="w-3.5 h-3.5" />
             Page 4 • Historical Pollution Tracker
           </div>
@@ -214,7 +214,7 @@ export default function HistoricalTracker() {
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+                  <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
                     4
                   </span>
                   <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">

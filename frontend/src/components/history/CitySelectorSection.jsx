@@ -34,7 +34,7 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
               1
             </span>
             <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
@@ -50,7 +50,7 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
           <button
             type="button"
             onClick={() => setIsChanging(true)}
-            className="self-start sm:self-auto text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
+            className="self-start sm:self-auto text-xs font-semibold text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
           >
             <Search className="w-3.5 h-3.5" />
             <span>Search Other City</span>
@@ -60,9 +60,9 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
 
       {/* Selected City Highlight Card */}
       {selectedCity && (
-        <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-gradient-to-r from-blue-50/70 via-indigo-50/30 to-white border border-blue-100/80">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-gradient-to-r from-emerald-50/70 via-teal-50/30 to-white border border-emerald-100/80">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-sm">
               <MapPin className="w-5 h-5" />
             </div>
             <div>
@@ -75,7 +75,7 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
                     • {selectedCity.state}
                   </span>
                 )}
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">
                   <Check className="w-3 h-3" /> Selected
                 </span>
               </div>
@@ -120,7 +120,7 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
               onClick={() => handleSelect(city)}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
                 isCurrent
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-emerald-600 text-white shadow-xs'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'
               }`}
             >

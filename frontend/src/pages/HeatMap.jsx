@@ -44,7 +44,7 @@ export default function HeatMap() {
         {/* Page Title & Last Update */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold tracking-wide">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold tracking-wide">
               <Map className="w-3.5 h-3.5" />
               HEAT MAP
             </div>

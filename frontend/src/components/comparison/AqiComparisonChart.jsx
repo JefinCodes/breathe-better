@@ -53,7 +53,7 @@ export default function AqiComparisonChart({ selectedCities, currentQueries }) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-4">
         <div>
           <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-blue-600" />
+            <BarChart3 className="w-5 h-5 text-emerald-600" />
             B. Current AQI Comparison
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -62,8 +62,8 @@ export default function AqiComparisonChart({ selectedCities, currentQueries }) {
         </div>
 
         {/* Prominent Scale Identifier Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-900">
-          <Info className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-100 text-xs text-emerald-900">
+          <Info className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
           <span>
             {allCpcb ? (
               <>
