@@ -40,3 +40,22 @@ export async function getHistory(latitude, longitude, startDate, endDate) {
   });
   return data;
 }
+
+/**
+ * Fetch heat map metadata including last update time and supported metrics.
+ * @returns {Promise<{ success: boolean, data: object }>}
+ */
+export async function getHeatmapMetadata() {
+  const { data } = await api.get('/heatmap/metadata');
+  return data;
+}
+
+/**
+ * Returns the backend tile URL template for Leaflet.
+ * Note: Leaflet replaces {z}, {x}, {y} dynamically.
+ * @param {string} metric - e.g. 'UAQI_RED_GREEN' or 'PM25_INDIGO_PERSIAN'
+ * @returns {string}
+ */
+export function getHeatmapTileUrl(metric) {
+  return `${API_BASE_URL}/api/air-quality/heatmap?metric=${metric}&zoom={z}&x={x}&y={y}`;
+}

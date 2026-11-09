@@ -1,6 +1,7 @@
 'use strict';
 
 const airQualityService = require('../services/airQualityService');
+const { heatmapCacheService } = require('../services/heatmapCacheService');
 const config = require('../config/airQuality');
 
 // ---------------------------------------------------------------------------
@@ -341,27 +342,39 @@ function extractTileErrorMessage(data) {
   }
 }
 
+const METRIC_ALIASES = {
+  aqi: 'UAQI_RED_GREEN',
+  universal_aqi: 'UAQI_RED_GREEN',
+  pm25: 'PM25_INDIGO_PERSIAN',
+};
+
+function normalizeMetric(metric) {
+  if (!metric) return null;
+  const lower = metric.toLowerCase();
+  if (METRIC_ALIASES[lower]) return METRIC_ALIASES[lower];
+  return metric;
+}
+
 /**
- * Proxies a single 256×256 PNG heatmap tile from Google to the browser.
- * The metric (mapType) is validated against a whitelist before the request
- * is forwarded — unknown types are rejected with a 400.
+ * Proxies a single 256×256 PNG heatmap tile from Google to the browser with
+ * robust in-memory caching and request deduplication.
  *
- * The frontend loads all tiles needed to cover India's geographic extent at
- * the chosen zoom level by making individual requests to this endpoint, one
- * per tile coordinate.
- *
- * Cache-Control is set so browsers and CDNs can cache tiles for 1 hour,
- * reducing redundant Google API calls for the same tile position.
+ * Cache validity:
+ *   - Follows Google's hourly update schedule.
+ *   - Valid until previous heat map update time + 1 hour.
+ *   - Multiple concurrent requests for an expired/uncached tile are coalesced
+ *     into a single upstream Google API request (thundering herd protection).
  */
 async function getHeatmapTile(req, res) {
   const { metric, zoom, x, y } = req.query;
 
-  if (!metric || !config.allowedMapTypes.includes(metric)) {
+  const mapType = normalizeMetric(metric);
+  if (!mapType || !config.allowedMapTypes.includes(mapType)) {
     return res.status(400).json({
       success: false,
       error: {
         code: 'INVALID_PARAMS',
-        message: `metric must be one of: ${config.allowedMapTypes.join(', ')}.`,
+        message: `metric must be one of: ${config.allowedMapTypes.join(', ')} (or aliases 'aqi', 'pm25').`,
       },
     });
   }
@@ -385,10 +398,21 @@ async function getHeatmapTile(req, res) {
   }
 
   try {
-    const tile = await airQualityService.getHeatmapTile(metric, z, tileX, tileY);
+    const tile = await heatmapCacheService.getOrFetchTile(
+      mapType,
+      z,
+      tileX,
+      tileY,
+      airQualityService.getHeatmapTile
+    );
+
+    const remainingTtlSeconds = Math.max(0, Math.floor((tile.expiresAt - Date.now()) / 1000));
     res.set('Content-Type', tile.contentType);
-    res.set('Cache-Control', 'public, max-age=3600');
-    return res.send(Buffer.from(tile.data));
+    res.set('Cache-Control', `public, max-age=${remainingTtlSeconds}`);
+    res.set('X-Cache', tile.isCacheHit ? 'HIT' : tile.coalesced ? 'COALESCED' : 'MISS');
+    res.set('X-Heatmap-Updated-At', new Date(tile.updatedAt).toISOString());
+    res.set('X-Heatmap-Expires-At', new Date(tile.expiresAt).toISOString());
+    return res.send(tile.data);
   } catch (err) {
     if (err.response) {
       const googleStatus = err.response.status;
@@ -414,8 +438,35 @@ async function getHeatmapTile(req, res) {
   }
 }
 
+/**
+ * Controller: GET /api/air-quality/heatmap/metadata
+ * Returns freshness information (last and next update time in IST)
+ * and supported heat map metrics.
+ */
+function getHeatmapMetadata(_req, res) {
+  try {
+    const meta = heatmapCacheService.getMetadata();
+    return res.json({
+      success: true,
+      data: meta,
+    });
+  } catch (err) {
+    console.error('[airQuality/getHeatmapMetadata] Error:', err.message);
+    return res.status(500).json({
+      success: false,
+      error: { code: 'INTERNAL_ERROR', message: 'Failed to retrieve heatmap metadata.' },
+    });
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Exports
 // ---------------------------------------------------------------------------
 
-module.exports = { getCurrent, getForecast, getHistory, getHeatmapTile };
+module.exports = {
+  getCurrent,
+  getForecast,
+  getHistory,
+  getHeatmapTile,
+  getHeatmapMetadata,
+};

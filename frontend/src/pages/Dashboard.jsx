@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { MapPin, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 import { useGeolocation } from '../hooks/useGeolocation';
 import { getCurrentConditions, getForecast } from '../api/airQuality';
@@ -14,6 +14,7 @@ import ForecastSection from '../components/dashboard/ForecastSection';
 import LoadingSkeleton from '../components/dashboard/LoadingSkeleton';
 import ErrorState from '../components/dashboard/ErrorState';
 import LocationPermissionPrompt from '../components/dashboard/LocationPermissionPrompt';
+import Navbar from '../components/Navbar';
 
 // ---------------------------------------------------------------------------
 // Dashboard page
@@ -129,23 +130,16 @@ export default function Dashboard() {
       {/* ------------------------------------------------------------------ */}
       {/* Sticky header */}
       {/* ------------------------------------------------------------------ */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-600 rounded-md flex items-center justify-center">
-              <MapPin className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900 text-sm">Breathe Better</span>
-          </div>
-
+      <Navbar
+        rightContent={
           <button
             onClick={() => setShowCityPicker(true)}
             className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Change location
           </button>
-        </div>
-      </header>
+        }
+      />
 
       {/* ------------------------------------------------------------------ */}
       {/* Main content */}

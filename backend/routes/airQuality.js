@@ -6,6 +6,7 @@ const {
   getForecast,
   getHistory,
   getHeatmapTile,
+  getHeatmapMetadata,
 } = require('../controllers/airQualityController');
 
 const router = express.Router();
@@ -29,8 +30,14 @@ router.get('/forecast', getForecast);
 router.get('/history', getHistory);
 
 /**
+ * GET /api/air-quality/heatmap/metadata
+ * Returns heatmap update time, next scheduled update, and supported metrics.
+ */
+router.get('/heatmap/metadata', getHeatmapMetadata);
+
+/**
  * GET /api/air-quality/heatmap?metric={mapType}&zoom={z}&x={x}&y={y}
- * Proxies a single 256×256 PNG heatmap tile from the Google Air Quality tile API.
+ * Proxies a single 256×256 PNG heatmap tile with in-memory caching and request deduplication.
  */
 router.get('/heatmap', getHeatmapTile);
 
