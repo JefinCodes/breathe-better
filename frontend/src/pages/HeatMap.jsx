@@ -61,7 +61,7 @@ export default function HeatMap() {
           onSelectMetric={setSelectedMetric}
         />
 
-        {/* Static Map Card at Zoom 5 */}
+        {/* Static Map Card (Zoom 4 on mobile, Zoom 5 on desktop) */}
         <StaticHeatmap metric={selectedMetric} />
 
         {/* Color Legend Bar */}

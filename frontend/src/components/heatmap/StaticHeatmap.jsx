@@ -7,33 +7,54 @@ import { getHeatmapTileUrl } from '../../api/airQuality';
 /**
  * Static India Pollution Heat Map Component.
  *
- * - Locked to Zoom Level 5 for high-clarity India view.
+ * - Responsive zoom: Zoom 4 on mobile screens (< 768px), Zoom 5 on desktop screens (>= 768px).
  * - Uses clean OpenStreetMap tiles with zero "API KEY REQUIRED" watermarks.
- * - Interaction completely disabled (no zoom, pan, dragging, or gestures).
+ * - Interaction completely disabled (no manual zoom, pan, dragging, or gestures).
  */
+const getResponsiveZoom = () => {
+  if (typeof window === 'undefined') return 5;
+  return window.innerWidth < 768 ? 4 : 5;
+};
+
 export default function StaticHeatmap({ metric }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const heatmapLayerRef = useRef(null);
 
+  const [currentZoom, setCurrentZoom] = useState(getResponsiveZoom);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [retryNonce, setRetryNonce] = useState(0);
 
+  // Monitor viewport size and adjust zoom dynamically for mobile (< 768px) vs desktop (>= 768px)
+  useEffect(() => {
+    const handleResize = () => {
+      const targetZoom = getResponsiveZoom();
+      setCurrentZoom((prevZoom) => (prevZoom !== targetZoom ? targetZoom : prevZoom));
+
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.invalidateSize();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Initialize static Leaflet map once on mount
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    // Center coordinates for India at Zoom 5: [22.5° N, 79.5° E]
+    // Center coordinates for India: [22.5° N, 79.5° E]
     const indiaCenter = [22.5, 79.5];
-    const fixedZoom = 5;
+    const initialZoom = getResponsiveZoom();
 
     const map = L.map(mapContainerRef.current, {
       center: indiaCenter,
-      zoom: fixedZoom,
-      minZoom: fixedZoom,
-      maxZoom: fixedZoom,
+      zoom: initialZoom,
+      minZoom: 4,
+      maxZoom: 5,
       zoomControl: false,
       dragging: false,
       scrollWheelZoom: false,
@@ -48,19 +69,38 @@ export default function StaticHeatmap({ metric }) {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>',
-      minZoom: fixedZoom,
-      maxZoom: fixedZoom,
+      minZoom: 4,
+      maxZoom: 5,
     }).addTo(map);
 
     mapInstanceRef.current = map;
 
+    // Ensure map tiles properly layout after initial container paint
+    const timer = setTimeout(() => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.invalidateSize();
+      }
+    }, 150);
+
     return () => {
+      clearTimeout(timer);
       map.remove();
       mapInstanceRef.current = null;
     };
   }, []);
 
-  // Update heatmap overlay layer whenever metric or retryNonce changes
+  // Sync Leaflet map view whenever responsive zoom changes
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!map) return;
+
+    if (map.getZoom() !== currentZoom) {
+      map.setView([22.5, 79.5], currentZoom);
+      map.invalidateSize();
+    }
+  }, [currentZoom]);
+
+  // Update heatmap overlay layer whenever metric, retryNonce, or currentZoom changes
   useEffect(() => {
     const map = mapInstanceRef.current;
     if (!map) return;
@@ -81,7 +121,7 @@ export default function StaticHeatmap({ metric }) {
     const layer = L.tileLayer(tileUrl, {
       opacity: 0.7,
       tileSize: 256,
-      minZoom: 5,
+      minZoom: 4,
       maxZoom: 5,
     });
 
@@ -116,7 +156,7 @@ export default function StaticHeatmap({ metric }) {
         map.removeLayer(layer);
       }
     };
-  }, [metric, retryNonce]);
+  }, [metric, retryNonce, currentZoom]);
 
   const handleRetry = () => {
     setRetryNonce((n) => n + 1);
@@ -124,7 +164,7 @@ export default function StaticHeatmap({ metric }) {
 
   return (
     <div className="relative w-full rounded-2xl border border-gray-200 overflow-hidden bg-white shadow-sm">
-      {/* Static map container at Zoom 5 */}
+      {/* Static map container (Zoom 4 on mobile, Zoom 5 on desktop) */}
       <div
         ref={mapContainerRef}
         className="w-full h-[580px] sm:h-[680px] bg-slate-50 relative z-0"
