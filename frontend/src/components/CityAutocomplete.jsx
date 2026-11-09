@@ -101,7 +101,7 @@ export default function CityAutocomplete({
     clearSearch();
     setIsOpen(false);
     inputRef.current?.focus();
-    if (onCitySelect) onCitySelect(null);
+    if (!clearOnSelect && onCitySelect) onCitySelect(null);
   }
 
   function handleKeyDown(e) {

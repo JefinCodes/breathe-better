@@ -27,8 +27,8 @@ export default function Dashboard() {
   // Active location mode: 'current' | 'city' | null
   const [locationMode, setLocationMode] = useState(null);
 
-  // Selected city object from CityAutocomplete (has latitude, longitude, name, state)
-  const [selectedCity, setSelectedCity] = useState(null);
+  // Active city object currently being displayed (has latitude, longitude, name, state)
+  const [activeCity, setActiveCity] = useState(null);
 
   // Current GPS / network coordinates resolved from device
   const [currentLocationCoords, setCurrentLocationCoords] = useState(null);
@@ -50,15 +50,15 @@ export default function Dashboard() {
   // -------------------------------------------------------------------------
 
   const coords =
-    locationMode === 'city' && selectedCity != null
-      ? { latitude: selectedCity.latitude, longitude: selectedCity.longitude }
+    locationMode === 'city' && activeCity != null
+      ? { latitude: activeCity.latitude, longitude: activeCity.longitude }
       : locationMode === 'current' && currentLocationCoords != null
       ? currentLocationCoords
       : null;
 
   const locationLabel =
-    locationMode === 'city' && selectedCity != null
-      ? { name: selectedCity.name, state: selectedCity.state, isCurrent: false }
+    locationMode === 'city' && activeCity != null
+      ? { name: activeCity.name, state: activeCity.state, isCurrent: false }
       : locationMode === 'current' && currentLocationCoords != null
       ? { name: 'Your Location', state: null, isCurrent: true }
       : null;
@@ -110,18 +110,15 @@ export default function Dashboard() {
   // -------------------------------------------------------------------------
 
   function handleCitySelect(city) {
-    if (city) {
-      userSelectedCityRef.current = true;
-      setSelectedCity(city);
-      setLocationMode('city');
-      setLocationError(null);
-      setIsCityHighlighted(false);
-    } else {
-      setSelectedCity(null);
-      if (locationMode === 'city') {
-        setLocationMode(null);
-      }
+    if (!city) {
+      // Just clearing the input field should not clear the data!
+      return;
     }
+    userSelectedCityRef.current = true;
+    setActiveCity(city);
+    setLocationMode('city');
+    setLocationError(null);
+    setIsCityHighlighted(false);
   }
 
   async function handleUseCurrentLocation() {
@@ -134,7 +131,7 @@ export default function Dashboard() {
 
     if (result.success && result.coords) {
       userSelectedCityRef.current = false;
-      setSelectedCity(null); // Clear city input since we switched to current location
+      setActiveCity(null); // Switch from city to current location
       setCurrentLocationCoords(result.coords);
       setLocationMode('current');
       setLocationError(null);
@@ -239,9 +236,9 @@ export default function Dashboard() {
             </div>
 
             <CityAutocomplete
-              selectedCity={selectedCity}
               onCitySelect={handleCitySelect}
               placeholder="Search for an Indian city (e.g. Mumbai, Delhi, Bengaluru)..."
+              clearOnSelect={true}
               isHighlighted={isCityHighlighted}
               inputRef={cityInputRef}
               onFocus={() => setIsCityHighlighted(false)}
