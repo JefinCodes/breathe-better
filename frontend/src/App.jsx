@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard';
 import HeatMap from './pages/HeatMap';
 import LocationComparison from './pages/LocationComparison';
 import HistoricalTracker from './pages/HistoricalTracker';
+import AqiGuide from './pages/AqiGuide';
 
 /**
  * Main application router for Breathe Better.
@@ -10,6 +11,7 @@ import HistoricalTracker from './pages/HistoricalTracker';
  * Route /map -> Page 2: Pollution Heat Map (Stage 4)
  * Route /compare -> Page 3: Location Comparison (Stage 5)
  * Route /history -> Page 4: Historical Pollution Tracker (Stage 6)
+ * Route /guide -> Page 5: Understanding India’s AQI (Educational Standards Guide)
  */
 export default function App() {
   return (
@@ -22,6 +24,11 @@ export default function App() {
         <Route path="/history" element={<HistoricalTracker />} />
         <Route path="/historical" element={<Navigate to="/history" replace />} />
         <Route path="/tracker" element={<Navigate to="/history" replace />} />
+        <Route path="/guide" element={<AqiGuide />} />
+        <Route path="/aqi-guide" element={<Navigate to="/guide" replace />} />
+        <Route path="/about-aqi" element={<Navigate to="/guide" replace />} />
+        <Route path="/understanding-aqi" element={<Navigate to="/guide" replace />} />
+        <Route path="/standards" element={<Navigate to="/guide" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
