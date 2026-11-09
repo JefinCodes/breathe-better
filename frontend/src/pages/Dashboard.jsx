@@ -347,7 +347,7 @@ export default function Dashboard() {
                 <PollutantGrid pollutants={currentData.pollutants} />
 
                 {/* Health advisory */}
-                <HealthAdvisory recommendations={currentData.healthRecommendations} />
+                <HealthAdvisory aqi={currentData.aqi} />
               </>
             )}
 

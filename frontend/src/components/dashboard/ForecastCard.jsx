@@ -1,52 +1,66 @@
-import { cn, getAqiColors, formatForecastHour } from '../../lib/utils';
+import { cn, getAqiColors } from '../../lib/utils';
+import { getCpcbCategory } from '../../lib/historyUtils';
 
 /**
- * Compact forecast tile for a single hour.
- * Shows IST time, an AQI colour-ring circle and the category label.
- * Preferentially shows CPCB (Indian) AQI for India-focused data, with
- * Universal AQI as a fallback.
+ * 24-hour forecast summary card.
+ * Displays the aggregated AQI average for a 24-hour window, category indicator,
+ * and time-range subtext.
  *
  * Props:
- *   hour — single element from the forecast array
- *     { timestamp, aqi[], pollutants[], healthRecommendations }
+ *   title   — e.g. 'Next 24 Hours'
+ *   aqi     — averaged AQI number (e.g. 142) or null
+ *   subtext — e.g. 'Average AQI • 0 - 24 hours'
  */
-export default function ForecastCard({ hour }) {
-  const cpcb = hour.aqi?.find((a) => a.code === 'ind_cpcb');
-  const uaqi = hour.aqi?.find((a) => a.code === 'uaqi');
-  const primary = cpcb || uaqi || null;
-
-  const colors = primary
-    ? getAqiColors(primary.code, primary.aqi)
-    : getAqiColors(null, null);
-
-  const { day, time } = formatForecastHour(hour.timestamp);
-
-  // Extract the first word of the category for compact display
-  const shortCategory = primary?.category?.split(' ')[0] ?? '—';
+export default function ForecastCard({ title, aqi, subtext }) {
+  const colors = getAqiColors('ind_cpcb', aqi);
+  const categoryInfo = getCpcbCategory(aqi);
 
   return (
-    <div className="flex-shrink-0 w-[72px] bg-white border border-gray-100 rounded-xl p-2.5 text-center shadow-sm">
-      {/* Time */}
-      <p className="text-[10px] font-semibold text-gray-400 leading-none">{day}</p>
-      <p className="text-[10px] text-gray-400 mt-0.5 leading-none">{time}</p>
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between transition-all hover:shadow-md">
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-sm font-bold text-gray-800">{title}</h4>
+          {aqi != null && (
+            <span
+              className={cn(
+                'text-[11px] font-semibold px-2.5 py-0.5 rounded-full border',
+                colors.bg,
+                colors.text,
+                colors.border
+              )}
+            >
+              {categoryInfo.category}
+            </span>
+          )}
+        </div>
 
-      {/* AQI ring */}
-      <div
-        className={cn(
-          'w-9 h-9 rounded-full ring-2 flex items-center justify-center mx-auto my-2',
-          colors.ring,
-          colors.bg
-        )}
-      >
-        <span className={cn('text-xs font-bold leading-none', colors.text)}>
-          {primary?.aqi ?? '—'}
-        </span>
+        <div className="flex items-center gap-3.5 my-3">
+          <div
+            className={cn(
+              'w-12 h-12 rounded-full ring-2 flex items-center justify-center flex-shrink-0',
+              colors.ring,
+              colors.bg
+            )}
+          >
+            <span className={cn('text-lg font-bold leading-none', colors.text)}>
+              {aqi ?? '—'}
+            </span>
+          </div>
+
+          <div>
+            <p className={cn('text-base font-bold leading-tight', colors.text)}>
+              {aqi != null ? `AQI ${aqi}` : 'No data'}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {categoryInfo.category !== 'Unknown' ? categoryInfo.category : 'Unavailable'}
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Category label (truncated) */}
-      <p className={cn('text-[10px] font-medium leading-tight', colors.text)}>
-        {shortCategory}
-      </p>
+      <div className="pt-3 border-t border-gray-100 mt-2">
+        <p className="text-xs text-gray-400 font-medium">{subtext}</p>
+      </div>
     </div>
   );
 }

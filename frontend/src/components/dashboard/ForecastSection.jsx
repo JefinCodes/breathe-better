@@ -1,13 +1,49 @@
 import { RefreshCw } from 'lucide-react';
 import ForecastCard from './ForecastCard';
-import HealthAdvisory from './HealthAdvisory';
 
 /**
- * Displays the full 96-hour forecast as a horizontal scrollable timeline,
- * followed by health recommendations from the first forecast hour (if available).
+ * Extracts a valid numeric AQI for an hourly forecast entry.
+ * Prioritizes India CPCB AQI, then Universal AQI.
+ */
+function extractHourAqi(hour) {
+  if (!hour) return null;
+  if (Array.isArray(hour.aqi)) {
+    const cpcb = hour.aqi.find((a) => a.code === 'ind_cpcb');
+    if (cpcb && typeof cpcb.aqi === 'number') return cpcb.aqi;
+    const uaqi = hour.aqi.find((a) => a.code === 'uaqi');
+    if (uaqi && typeof uaqi.aqi === 'number') return uaqi.aqi;
+    const any = hour.aqi.find((a) => typeof a.aqi === 'number');
+    if (any) return any.aqi;
+  } else if (typeof hour.aqi === 'number') {
+    return hour.aqi;
+  }
+  return null;
+}
+
+/**
+ * Computes rounded average AQI from a slice of hourly forecast entries.
+ */
+function computeAverageAqi(hours) {
+  if (!hours || hours.length === 0) return null;
+  const values = hours
+    .map(extractHourAqi)
+    .filter((v) => typeof v === 'number' && !isNaN(v));
+  if (values.length === 0) return null;
+  const total = values.reduce((sum, val) => sum + val, 0);
+  return Math.round(total / values.length);
+}
+
+/**
+ * Displays the 72-hour forecast aggregated into 3 periods of 24 hours each:
+ * 1. 'Next 24 Hours'  (0 - 24 hours)
+ * 2. '24 - 48 Hours'  (24 - 48 hours)
+ * 3. '48 - 72 Hours'  (48 - 72 hours)
+ *
+ * If the forecast contains 73 hourly entries, the 73rd entry (index 72) is neglected.
+ * The health advisory section for forecast has been removed per specification.
  *
  * Props:
- *   forecast  — array of hourly forecast objects | undefined
+ *   forecast  — array of hourly forecast objects
  *   isLoading — boolean
  *   isError   — boolean
  *   onRetry   — callback to refetch
@@ -15,21 +51,25 @@ import HealthAdvisory from './HealthAdvisory';
 export default function ForecastSection({ forecast, isLoading, isError, onRetry }) {
   const sectionLabel = (
     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-      {forecast?.length ? `${forecast.length}-Hour Forecast` : 'Forecast'}
+      72-Hour Forecast
     </h3>
   );
 
-  // Loading skeleton
+  // Loading skeleton (3 cards)
   if (isLoading) {
     return (
       <section>
         {sectionLabel}
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          {Array.from({ length: 10 }).map((_, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-[72px] h-[90px] bg-gray-100 rounded-xl animate-pulse"
-            />
+              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 h-36 animate-pulse"
+            >
+              <div className="h-4 bg-gray-100 rounded w-1/2 mb-4" />
+              <div className="w-12 h-12 bg-gray-100 rounded-full mb-3" />
+              <div className="h-3 bg-gray-100 rounded w-2/3" />
+            </div>
           ))}
         </div>
       </section>
@@ -69,33 +109,42 @@ export default function ForecastSection({ forecast, isLoading, isError, onRetry 
     );
   }
 
-  // Near-term health advisory from the first forecast hour
-  const nearTermRecs = forecast[0]?.healthRecommendations ?? null;
-  const hasRecs = nearTermRecs &&
-    Object.values(nearTermRecs).some((v) => v && v.trim().length > 0);
+  // Neglect the 73rd value (or any beyond 72)
+  const period1Aqi = computeAverageAqi(forecast.slice(0, 24));
+  const period2Aqi = computeAverageAqi(forecast.slice(24, 48));
+  const period3Aqi = computeAverageAqi(forecast.slice(48, 72));
+
+  const periods = [
+    {
+      title: 'Next 24 Hours',
+      aqi: period1Aqi,
+      subtext: 'Average AQI • 0 - 24 hours',
+    },
+    {
+      title: '24 - 48 Hours',
+      aqi: period2Aqi,
+      subtext: 'Average AQI • 24 - 48 hours',
+    },
+    {
+      title: '48 - 72 Hours',
+      aqi: period3Aqi,
+      subtext: 'Average AQI • 48 - 72 hours',
+    },
+  ];
 
   return (
-    <section className="space-y-5">
-      {/* Scrollable timeline */}
-      <div>
-        {sectionLabel}
-        <div
-          className="flex gap-2 overflow-x-auto pb-2"
-          style={{ scrollbarWidth: 'thin', scrollbarColor: '#e5e7eb transparent' }}
-        >
-          {forecast.map((hour, i) => (
-            <ForecastCard key={i} hour={hour} />
-          ))}
-        </div>
+    <section>
+      {sectionLabel}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {periods.map((period) => (
+          <ForecastCard
+            key={period.title}
+            title={period.title}
+            aqi={period.aqi}
+            subtext={period.subtext}
+          />
+        ))}
       </div>
-
-      {/* Forecast health advisory */}
-      {hasRecs && (
-        <HealthAdvisory
-          recommendations={nearTermRecs}
-          title="Forecast Health Advisory"
-        />
-      )}
     </section>
   );
 }
