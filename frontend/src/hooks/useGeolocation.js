@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 /**
  * Maximum accuracy radius (metres) accepted from the browser's low-accuracy
@@ -15,8 +15,8 @@ import { useState, useEffect } from 'react';
 const MAX_LOW_ACCURACY_METERS = 10_000; // 10 km
 
 /**
- * Resolves the device's coordinates using a fully browser-native three-tier
- * fallback strategy. No API keys or backend calls are involved in location
+ * Resolves the device's coordinates using a browser-native multi-tier
+ * fallback strategy. No external API keys or backend calls are involved in location
  * resolution.
  *
  *   Tier 1 — High-accuracy GPS
@@ -28,17 +28,18 @@ const MAX_LOW_ACCURACY_METERS = 10_000; // 10 km
  *     The browser/OS resolves location via available network signals.
  *     Only accepted when position.coords.accuracy ≤ MAX_LOW_ACCURACY_METERS.
  *
- *   Tier 3 — City picker
- *     Shown when both tiers fail or return low-confidence coordinates.
+ *   Tier 3 — Fallback failure / manual city selection
+ *     Reported when both tiers fail or return low-confidence coordinates.
  *
  * Status transitions:
  *   'idle'       → initial state before any attempt
  *   'requesting' → actively attempting GPS or WiFi positioning
  *   'granted'    → coordinates resolved successfully
- *   'denied'     → all automatic methods failed; city picker is shown
+ *   'denied'     → automatic methods failed
  *
- * Returns: { status, coords: { latitude, longitude } | null, source, error }
+ * Returns: { status, coords: { latitude, longitude } | null, source, error, detectLocation }
  *   source: 'gps' | 'wifi' | null
+ *   detectLocation: function returning Promise<{ success, coords, source, error }>
  */
 export function useGeolocation() {
   const [state, setState] = useState({
@@ -48,95 +49,112 @@ export function useGeolocation() {
     error: null,
   });
 
+  const isMountedRef = useRef(true);
+
   useEffect(() => {
-    // Guard against setting state after the component unmounts
-    let cancelled = false;
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
-    // ------------------------------------------------------------------
-    // Tier 3 — give up, show city picker
-    // ------------------------------------------------------------------
-    function fallbackToCityPicker(reason) {
-      if (cancelled) return;
-      setState({
-        status: 'denied',
-        coords: null,
-        source: null,
-        error: reason,
-      });
-    }
-
-    // ------------------------------------------------------------------
-    // Tier 2 — browser WiFi / cell-tower / IP positioning
-    // ------------------------------------------------------------------
-    function tryLowAccuracyPositioning() {
-      if (!navigator.geolocation) {
-        fallbackToCityPicker('Geolocation is not supported by this browser.');
+  const detectLocation = useCallback(() => {
+    return new Promise((resolve) => {
+      if (typeof window === 'undefined' || !navigator.geolocation) {
+        const errorMsg = 'Geolocation is not supported by this browser.';
+        if (isMountedRef.current) {
+          setState({
+            status: 'denied',
+            coords: null,
+            source: null,
+            error: errorMsg,
+          });
+        }
+        resolve({ success: false, coords: null, source: null, error: errorMsg });
         return;
       }
 
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          if (cancelled) return;
+      if (isMountedRef.current) {
+        setState((prev) => ({ ...prev, status: 'requesting', error: null }));
+      }
 
-          const { latitude, longitude, accuracy } = position.coords;
+      function finishFailure(reason) {
+        if (isMountedRef.current) {
+          setState({
+            status: 'denied',
+            coords: null,
+            source: null,
+            error: reason,
+          });
+        }
+        resolve({ success: false, coords: null, source: null, error: reason });
+      }
 
-          // Reject results whose uncertainty circle is too large to reliably
-          // identify a city. The check is skipped if accuracy is not reported.
-          if (accuracy != null && accuracy > MAX_LOW_ACCURACY_METERS) {
-            fallbackToCityPicker(
-              `Network positioning accuracy too low (${Math.round(accuracy / 1000)} km).`
-            );
-            return;
-          }
-
+      function finishSuccess(coords, source) {
+        if (isMountedRef.current) {
           setState({
             status: 'granted',
-            coords: { latitude, longitude },
-            source: 'wifi',
+            coords,
+            source,
             error: null,
           });
-        },
-        () => {
-          // WiFi positioning also denied or failed — city picker
-          if (cancelled) return;
-          fallbackToCityPicker('Could not determine location automatically.');
-        },
-        {
-          enableHighAccuracy: false, // browser uses WiFi / cell / IP
-          timeout: 8_000,
-          maximumAge: 120_000,
         }
-      );
-    }
-
-    // ------------------------------------------------------------------
-    // Tier 1 — GPS (high accuracy)
-    // ------------------------------------------------------------------
-    function tryGpsPositioning() {
-      if (!navigator.geolocation) {
-        // No geolocation API at all — skip straight to city picker
-        fallbackToCityPicker('Geolocation is not supported by this browser.');
-        return;
+        resolve({ success: true, coords, source, error: null });
       }
 
-      setState((prev) => ({ ...prev, status: 'requesting' }));
+      // ------------------------------------------------------------------
+      // Tier 2 — Browser WiFi / cell-tower / IP positioning
+      // ------------------------------------------------------------------
+      function tryLowAccuracyPositioning() {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude, accuracy } = position.coords;
 
+            // Reject results whose uncertainty circle is too large to reliably
+            // identify a city. The check is skipped if accuracy is not reported.
+            if (accuracy != null && accuracy > MAX_LOW_ACCURACY_METERS) {
+              finishFailure(
+                `Network positioning accuracy too low (${Math.round(accuracy / 1000)} km). Please select your city.`
+              );
+              return;
+            }
+
+            finishSuccess({ latitude, longitude }, 'wifi');
+          },
+          (err) => {
+            let msg = 'Could not determine location automatically.';
+            if (err?.code === 1) {
+              msg = 'Location permission was denied. Please allow location access or select a city.';
+            } else if (err?.code === 2) {
+              msg = 'Location information is unavailable on your device.';
+            } else if (err?.code === 3) {
+              msg = 'Location request timed out. Please try again or select a city.';
+            }
+            finishFailure(msg);
+          },
+          {
+            enableHighAccuracy: false, // browser uses WiFi / cell / IP
+            timeout: 8_000,
+            maximumAge: 120_000,
+          }
+        );
+      }
+
+      // ------------------------------------------------------------------
+      // Tier 1 — GPS (high accuracy)
+      // ------------------------------------------------------------------
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          if (cancelled) return;
-          setState({
-            status: 'granted',
-            coords: {
+          finishSuccess(
+            {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             },
-            source: 'gps',
-            error: null,
-          });
+            'gps'
+          );
         },
         () => {
           // GPS denied or timed out → try WiFi positioning
-          if (cancelled) return;
           tryLowAccuracyPositioning();
         },
         {
@@ -145,14 +163,11 @@ export function useGeolocation() {
           maximumAge: 60_000,
         }
       );
-    }
-
-    tryGpsPositioning();
-
-    return () => {
-      cancelled = true;
-    };
+    });
   }, []);
 
-  return state;
+  return {
+    ...state,
+    detectLocation,
+  };
 }

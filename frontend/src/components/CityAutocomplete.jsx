@@ -10,6 +10,11 @@ import { useCitySearch } from '../hooks/useCitySearch';
  *   placeholder (string): Input placeholder text.
  *   className (string): Extra CSS classes for the wrapper.
  *   label (string): Optional label text.
+ *   clearOnSelect (boolean): If true, clears the input after selection.
+ *   selectedCity (object|null): Optional controlled selected city.
+ *   isHighlighted (boolean): If true, renders a highlighted ring around the input.
+ *   inputRef (object): Optional ref to the underlying input element.
+ *   onFocus (function): Optional focus callback.
  */
 export default function CityAutocomplete({
   onCitySelect,
@@ -17,31 +22,38 @@ export default function CityAutocomplete({
   className = '',
   label,
   clearOnSelect = false,
+  selectedCity: controlledCity,
+  isHighlighted = false,
+  inputRef: externalInputRef,
+  onFocus: externalOnFocus,
 }) {
   const listboxId = useId();
-  const inputRef = useRef(null);
+  const localInputRef = useRef(null);
+  const inputRef = externalInputRef || localInputRef;
   const listRef = useRef(null);
   const wrapperRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [uncontrolledCity, setUncontrolledCity] = useState(null);
+
+  // Derive selectedCity from controlled prop or internal state
+  const selectedCity = controlledCity !== undefined ? controlledCity : uncontrolledCity;
 
   const { query, suggestions, loading, error, search, clearSearch } = useCitySearch(300);
+
+  // Clear search string if controlled city is reset to null
+  const prevControlledRef = useRef(controlledCity);
+  useEffect(() => {
+    if (prevControlledRef.current && !controlledCity) {
+      clearSearch();
+    }
+    prevControlledRef.current = controlledCity;
+  }, [controlledCity, clearSearch]);
 
   // Format city name: first char uppercase, rest lowercase
   const formatCityName = (name) =>
     name ? name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() : '';
-
-  // Open dropdown when suggestions arrive or when typing
-  useEffect(() => {
-    if (query.length > 0) {
-      setIsOpen(true);
-      setActiveIndex(-1);
-    } else {
-      setIsOpen(false);
-    }
-  }, [query, suggestions]);
 
   // Close on outside click
   useEffect(() => {
@@ -57,19 +69,27 @@ export default function CityAutocomplete({
   function handleInputChange(e) {
     const value = e.target.value;
     // If user edits after selection, clear the selection
-    if (selectedCity) {
-      setSelectedCity(null);
+    if (controlledCity === undefined && uncontrolledCity) {
+      setUncontrolledCity(null);
+    } else if (controlledCity && onCitySelect) {
+      onCitySelect(null);
     }
     search(value);
+    if (value.length > 0) {
+      setIsOpen(true);
+      setActiveIndex(-1);
+    } else {
+      setIsOpen(false);
+    }
   }
 
   function handleSelect(city) {
     if (clearOnSelect) {
-      setSelectedCity(null);
+      if (controlledCity === undefined) setUncontrolledCity(null);
       clearSearch();
       setIsOpen(false);
     } else {
-      setSelectedCity(city);
+      if (controlledCity === undefined) setUncontrolledCity(city);
       setIsOpen(false);
       clearSearch();
     }
@@ -77,7 +97,7 @@ export default function CityAutocomplete({
   }
 
   function handleClear() {
-    setSelectedCity(null);
+    if (controlledCity === undefined) setUncontrolledCity(null);
     clearSearch();
     setIsOpen(false);
     inputRef.current?.focus();
@@ -138,7 +158,7 @@ export default function CityAutocomplete({
 
       {/* Input wrapper */}
       <div className="relative flex items-center">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
         <input
           id={listboxId + '-input'}
           ref={inputRef}
@@ -152,14 +172,19 @@ export default function CityAutocomplete({
           value={displayValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          onFocus={() => {
+          onFocus={(e) => {
             if (query.length > 0 && suggestions.length > 0) setIsOpen(true);
+            if (externalOnFocus) externalOnFocus(e);
           }}
           placeholder={placeholder}
-          className="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+          className={`w-full pl-10 pr-10 py-2.5 text-sm rounded-xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-xs ${
+            isHighlighted
+              ? 'border-2 border-blue-500 ring-4 ring-blue-100'
+              : 'border border-gray-300'
+          }`}
         />
         {/* Loading spinner or clear button */}
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+        <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
           {loading ? (
             <Loader2 className="w-4 h-4 text-gray-400 animate-spin" />
           ) : (selectedCity || query) ? (
@@ -182,7 +207,7 @@ export default function CityAutocomplete({
           ref={listRef}
           role="listbox"
           aria-label="City suggestions"
-          className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+          className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto py-1"
         >
           {/* Error state */}
           {error && (
@@ -203,7 +228,7 @@ export default function CityAutocomplete({
                 handleSelect(city);
               }}
               onMouseEnter={() => setActiveIndex(index)}
-              className={`flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors ${
+              className={`flex items-start gap-3 px-4 py-2.5 cursor-pointer transition-colors ${
                 activeIndex === index
                   ? 'bg-blue-50 text-blue-900'
                   : 'text-gray-800 hover:bg-gray-50'
