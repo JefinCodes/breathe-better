@@ -17,12 +17,11 @@ const config = {
 
   /**
    * Model to use on NVIDIA NIM API.
-   * Prominently featured free endpoints on build.nvidia.com:
-   *   - deepseek-ai/deepseek-v4.1-flash
+   * High performance models with verified active endpoints:
    *   - nvidia/nemotron-3.5-lightning-30b-a3b
    *   - mistralai/mistral-large-4-1t-a52b
    */
-  nvidiaModel: process.env.NVIDIA_MODEL || 'deepseek-ai/deepseek-v4.1-flash',
+  nvidiaModel: process.env.NVIDIA_MODEL || 'nvidia/nemotron-3.5-lightning-30b-a3b',
 
   /** Maximum recent messages to maintain in context memory */
   memoryWindow: 8,
@@ -32,6 +31,9 @@ const config = {
 
   /** Temperature for factual consistency */
   temperature: 0.1,
+
+  /** Timeout in ms for NVIDIA LLM calls (prevents long hanging delays) */
+  timeoutMs: 6000,
 };
 
 module.exports = config;

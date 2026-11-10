@@ -81,13 +81,10 @@ const NAV_ITEMS = [
 export default function Navbar({ rightContent }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const [prevPath, setPrevPath] = useState(location.pathname);
-
-  // Auto-close menu when route changes without cascading render effect
-  if (location.pathname !== prevPath) {
-    setPrevPath(location.pathname);
+  // Auto-close menu when route changes
+  useEffect(() => {
     setIsMobileMenuOpen(false);
-  }
+  }, [location.pathname]);
 
   // Close mobile menu when screen size reaches desktop breakpoint (md: 768px)
   useEffect(() => {

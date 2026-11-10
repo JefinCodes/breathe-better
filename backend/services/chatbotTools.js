@@ -35,7 +35,44 @@ const CITY_ALIASES = {
   benares: 'varanasi',
   mysore: 'mysuru',
   pondicherry: 'puducherry',
+  poona: 'pune',
+  secunderabad: 'hyderabad',
+  vizag: 'visakhapatnam',
+  waltair: 'visakhapatnam',
+  cawnpore: 'kanpur',
+  ooty: 'udhagamandalam',
+  simla: 'shimla',
+  'new delhi': 'delhi',
 };
+
+// In-memory cache for top Indian cities to provide microsecond response
+const majorCitiesCache = new Map();
+let isMajorCitiesLoaded = false;
+
+function ensureMajorCitiesLoaded() {
+  if (isMajorCitiesLoaded) return;
+  try {
+    const db = getDb();
+    const rows = db.prepare(
+      'SELECT name, normalized_name, state, latitude, longitude, population FROM cities WHERE population IS NOT NULL AND population > 50000 ORDER BY population DESC LIMIT 1000'
+    ).all();
+    for (const r of rows) {
+      if (!majorCitiesCache.has(r.normalized_name)) {
+        majorCitiesCache.set(r.normalized_name, r);
+      }
+    }
+    isMajorCitiesLoaded = true;
+  } catch (err) {
+    console.error('[chatbotTools] Failed to preload major cities:', err.message);
+  }
+}
+
+// In-memory cache for real-time AQI readings (3 minutes TTL) to make follow-ups instant
+const liveAqiCache = new Map();
+const CACHE_TTL_MS = 3 * 60 * 1000;
+
+// Query lookup cache for geocoding / SQLite lookups
+const queryLookupCache = new Map();
 
 /**
  * Tool 1: Resolves a city name to latitude and longitude.
@@ -51,10 +88,32 @@ async function getLocationCoordinates({ query }) {
     normalized = CITY_ALIASES[normalized];
   }
 
+  // Check lookup cache
+  if (queryLookupCache.has(normalized)) {
+    return queryLookupCache.get(normalized);
+  }
+
+  ensureMajorCitiesLoaded();
+
+  // 1. Fast check in preloaded major cities
+  if (majorCitiesCache.has(normalized)) {
+    const city = majorCitiesCache.get(normalized);
+    const result = {
+      found: true,
+      name: city.name,
+      state: city.state,
+      latitude: city.latitude,
+      longitude: city.longitude,
+      source: 'major_cities_cache',
+    };
+    queryLookupCache.set(normalized, result);
+    return result;
+  }
+
   try {
     const db = getDb();
 
-    // 1. Exact match on normalized_name
+    // 2. Exact match on normalized_name (highest priority)
     let stmt = db.prepare(`
       SELECT name, state, latitude, longitude, population
       FROM cities
@@ -64,32 +123,20 @@ async function getLocationCoordinates({ query }) {
     `);
     let city = stmt.get(normalized);
 
-    // 2. Prefix match if not found
-    if (!city) {
+    // 3. Word-boundary prefix match if not found and query is a substantive name (>= 4 chars)
+    if (!city && normalized.length >= 4) {
       stmt = db.prepare(`
         SELECT name, state, latitude, longitude, population
         FROM cities
-        WHERE normalized_name LIKE ?
+        WHERE normalized_name LIKE ? AND population > 50000
         ORDER BY population DESC NULLS LAST
         LIMIT 1
       `);
-      city = stmt.get(`${normalized}%`);
-    }
-
-    // 3. Substring match if still not found
-    if (!city && normalized.length >= 3) {
-      stmt = db.prepare(`
-        SELECT name, state, latitude, longitude, population
-        FROM cities
-        WHERE normalized_name LIKE ?
-        ORDER BY population DESC NULLS LAST
-        LIMIT 1
-      `);
-      city = stmt.get(`%${normalized}%`);
+      city = stmt.get(`${normalized} %`);
     }
 
     if (city) {
-      return {
+      const result = {
         found: true,
         name: city.name,
         state: city.state,
@@ -97,6 +144,8 @@ async function getLocationCoordinates({ query }) {
         longitude: city.longitude,
         source: 'india_cities_database',
       };
+      queryLookupCache.set(normalized, result);
+      return result;
     }
   } catch (err) {
     console.error('[chatbotTools/getLocationCoordinates] SQLite error:', err.message);
@@ -117,7 +166,7 @@ async function getLocationCoordinates({ query }) {
         const top = geoRes.data.results[0];
         const lat = top.geometry?.location?.lat;
         const lon = top.geometry?.location?.lng;
-        return {
+        const result = {
           found: true,
           name: top.formatted_address || rawQuery,
           state: '',
@@ -125,29 +174,82 @@ async function getLocationCoordinates({ query }) {
           longitude: lon,
           source: 'google_geocoding',
         };
+        queryLookupCache.set(normalized, result);
+        return result;
       }
     } catch (geoErr) {
       console.warn('[chatbotTools/getLocationCoordinates] Google Geocoding fallback error:', geoErr.message);
     }
   }
 
-  return {
+  const notFound = {
     found: false,
     query: rawQuery,
     message: `Could not find coordinates for "${rawQuery}". Please specify a recognized city or region.`,
+  };
+  return notFound;
+}
+
+/**
+ * Helper: Ensures coordinates and city name are synchronized and non-null.
+ */
+async function resolveLocationParams({ latitude, longitude, cityName }) {
+  let resolvedLat = latitude;
+  let resolvedLon = longitude;
+  let resolvedCity = cityName;
+
+  // If cityName provided, ensure coordinates match that city
+  if (cityName && (resolvedLat == null || resolvedLon == null)) {
+    const coords = await getLocationCoordinates({ query: cityName });
+    if (coords.found) {
+      resolvedLat = coords.latitude;
+      resolvedLon = coords.longitude;
+      resolvedCity = coords.name;
+    }
+  }
+
+  return {
+    latitude: resolvedLat,
+    longitude: resolvedLon,
+    cityName: resolvedCity || 'Selected Location',
   };
 }
 
 /**
  * Tool 2: Fetches real-time air quality for a location.
+ * Self-resolves cityName if coordinates are not provided.
  */
-async function getCurrentAirQuality({ latitude, longitude, cityName, conversationId }) {
-  if (latitude == null || longitude == null) {
-    return { error: 'Latitude and longitude are required.' };
+async function getCurrentAirQuality({ latitude, longitude, cityName, conversationId, skipSessionUpdate = false }) {
+  const resolved = await resolveLocationParams({ latitude, longitude, cityName });
+  const activeLat = resolved.latitude;
+  const activeLon = resolved.longitude;
+  const activeCity = resolved.cityName;
+
+  if (activeLat == null || activeLon == null) {
+    return { error: `Latitude and longitude could not be determined for "${cityName || 'the location'}".` };
+  }
+
+  // Update conversation session atomically with synchronized city & coordinates
+  if (conversationId && !skipSessionUpdate && activeCity && activeCity !== 'Selected Location') {
+    await chatbotDb.upsertSession(conversationId, {
+      lastCity: activeCity,
+      lastLatitude: activeLat,
+      lastLongitude: activeLon,
+    });
+  }
+
+  // Check in-memory cache for speed
+  const cacheKey = `${Number(activeLat).toFixed(3)},${Number(activeLon).toFixed(3)}`;
+  const cached = liveAqiCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    return {
+      ...cached.data,
+      cityName: activeCity,
+    };
   }
 
   try {
-    const raw = await airQualityService.getCurrentConditions(latitude, longitude);
+    const raw = await airQualityService.getCurrentConditions(activeLat, activeLon);
 
     const cpcbIndex = raw.indexes?.find((i) => i.code === 'ind_cpcb');
     const uaqiIndex = raw.indexes?.find((i) => i.code === 'uaqi');
@@ -174,19 +276,10 @@ async function getCurrentAirQuality({ latitude, longitude, cityName, conversatio
     // CPCB guideline matching
     const cpcbMeta = getCategoryForAqi(aqiValue);
 
-    // Update conversation session
-    if (conversationId && cityName) {
-      await chatbotDb.upsertSession(conversationId, {
-        lastCity: cityName,
-        lastLatitude: latitude,
-        lastLongitude: longitude,
-      });
-    }
-
-    return {
-      cityName: cityName || 'Selected Location',
-      latitude,
-      longitude,
+    const result = {
+      cityName: activeCity,
+      latitude: activeLat,
+      longitude: activeLon,
       dateTime: raw.dateTime,
       primaryIndex: {
         code: activeIndex?.code,
@@ -205,9 +298,15 @@ async function getCurrentAirQuality({ latitude, longitude, cityName, conversatio
       pollutants,
       healthRecommendations: raw.healthRecommendations || null,
     };
+
+    liveAqiCache.set(cacheKey, { timestamp: Date.now(), data: result });
+    return result;
   } catch (err) {
     console.error('[chatbotTools/getCurrentAirQuality] Error:', err.message);
     return {
+      cityName: activeCity,
+      latitude: activeLat,
+      longitude: activeLon,
       error: `Failed to fetch live air quality data: ${err.message}`,
     };
   }
@@ -215,14 +314,29 @@ async function getCurrentAirQuality({ latitude, longitude, cityName, conversatio
 
 /**
  * Tool 3: Fetches AQI forecast (tomorrow & upcoming days).
+ * Self-resolves cityName if coordinates are not provided.
  */
 async function getForecastAirQuality({ latitude, longitude, cityName, conversationId }) {
-  if (latitude == null || longitude == null) {
-    return { error: 'Latitude and longitude are required.' };
+  const resolved = await resolveLocationParams({ latitude, longitude, cityName });
+  const activeLat = resolved.latitude;
+  const activeLon = resolved.longitude;
+  const activeCity = resolved.cityName;
+
+  if (activeLat == null || activeLon == null) {
+    return { error: `Latitude and longitude could not be determined for "${cityName || 'the location'}".` };
+  }
+
+  // Update conversation session
+  if (conversationId && activeCity && activeCity !== 'Selected Location') {
+    await chatbotDb.upsertSession(conversationId, {
+      lastCity: activeCity,
+      lastLatitude: activeLat,
+      lastLongitude: activeLon,
+    });
   }
 
   try {
-    const raw = await airQualityService.getForecast(latitude, longitude);
+    const raw = await airQualityService.getForecast(activeLat, activeLon);
     const hourly = Array.isArray(raw.hourlyForecasts) ? raw.hourlyForecasts : [];
 
     if (hourly.length === 0) {
@@ -280,19 +394,10 @@ async function getForecastAirQuality({ latitude, longitude, cityName, conversati
       };
     });
 
-    // Update conversation session
-    if (conversationId && cityName) {
-      await chatbotDb.upsertSession(conversationId, {
-        lastCity: cityName,
-        lastLatitude: latitude,
-        lastLongitude: longitude,
-      });
-    }
-
     return {
-      cityName: cityName || 'Selected Location',
-      latitude,
-      longitude,
+      cityName: activeCity,
+      latitude: activeLat,
+      longitude: activeLon,
       days: daysSummary,
       tomorrowSummary: daysSummary[1] || daysSummary[0],
     };
@@ -304,10 +409,25 @@ async function getForecastAirQuality({ latitude, longitude, cityName, conversati
 
 /**
  * Tool 4: Fetches historical air quality (up to 30 days supported by Google).
+ * Self-resolves cityName if coordinates are not provided.
  */
 async function getHistoricalAirQuality({ latitude, longitude, cityName, days = 30, conversationId }) {
-  if (latitude == null || longitude == null) {
-    return { error: 'Latitude and longitude are required.' };
+  const resolved = await resolveLocationParams({ latitude, longitude, cityName });
+  const activeLat = resolved.latitude;
+  const activeLon = resolved.longitude;
+  const activeCity = resolved.cityName;
+
+  if (activeLat == null || activeLon == null) {
+    return { error: `Latitude and longitude could not be determined for "${cityName || 'the location'}".` };
+  }
+
+  // Update conversation session
+  if (conversationId && activeCity && activeCity !== 'Selected Location') {
+    await chatbotDb.upsertSession(conversationId, {
+      lastCity: activeCity,
+      lastLatitude: activeLat,
+      lastLongitude: activeLon,
+    });
   }
 
   // Google API allows at most 30 days and requires endDate to be in the past
@@ -324,8 +444,8 @@ async function getHistoricalAirQuality({ latitude, longitude, cityName, days = 3
 
   try {
     const raw = await airQualityService.getHistory(
-      latitude,
-      longitude,
+      activeLat,
+      activeLon,
       startUtc.toISOString(),
       endUtc.toISOString()
     );
@@ -333,7 +453,7 @@ async function getHistoricalAirQuality({ latitude, longitude, cityName, days = 3
     const hours = Array.isArray(raw.hoursInfo) ? raw.hoursInfo : [];
     if (hours.length === 0) {
       return {
-        cityName,
+        cityName: activeCity,
         message: 'No historical observations found for the specified period.',
         timeframeRequestedDays: requestedDays,
       };
@@ -369,17 +489,8 @@ async function getHistoricalAirQuality({ latitude, longitude, cityName, days = 3
     const prominentPollutant = Object.entries(dominantCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'pm25';
     const cpcbMeta = getCategoryForAqi(averageAqi);
 
-    // Update conversation session
-    if (conversationId && cityName) {
-      await chatbotDb.upsertSession(conversationId, {
-        lastCity: cityName,
-        lastLatitude: latitude,
-        lastLongitude: longitude,
-      });
-    }
-
     return {
-      cityName: cityName || 'Selected Location',
+      cityName: activeCity,
       timeframeDaysAnalyzed: queryDays,
       requestedDays,
       exceededApiLimit,
@@ -400,6 +511,7 @@ async function getHistoricalAirQuality({ latitude, longitude, cityName, days = 3
   } catch (err) {
     console.error('[chatbotTools/getHistoricalAirQuality] Error:', err.message);
     return {
+      cityName: activeCity,
       error: `Failed to fetch historical AQI data: ${err.message}`,
     };
   }
@@ -449,15 +561,14 @@ const TOOL_DEFINITIONS = [
     type: 'function',
     function: {
       name: 'get_current_air_quality',
-      description: 'Fetches real-time air quality index (AQI), pollutants (PM2.5, PM10, etc.), category, and health guidelines for given coordinates.',
+      description: 'Fetches real-time air quality index (AQI), pollutants (PM2.5, PM10, etc.), category, and health guidelines for given city or coordinates.',
       parameters: {
         type: 'object',
         properties: {
-          latitude: { type: 'number', description: 'Latitude coordinate' },
-          longitude: { type: 'number', description: 'Longitude coordinate' },
-          cityName: { type: 'string', description: 'Name of the city/location' },
+          cityName: { type: 'string', description: 'Name of the city/location (e.g. "Mumbai", "Delhi", "Pune")' },
+          latitude: { type: 'number', description: 'Latitude coordinate (optional if cityName provided)' },
+          longitude: { type: 'number', description: 'Longitude coordinate (optional if cityName provided)' },
         },
-        required: ['latitude', 'longitude'],
       },
     },
   },
@@ -465,15 +576,14 @@ const TOOL_DEFINITIONS = [
     type: 'function',
     function: {
       name: 'get_air_quality_forecast',
-      description: 'Fetches hourly AQI forecast for tomorrow and the next 72 hours for given coordinates.',
+      description: 'Fetches hourly AQI forecast for tomorrow and the next 72 hours for given city or coordinates.',
       parameters: {
         type: 'object',
         properties: {
-          latitude: { type: 'number', description: 'Latitude coordinate' },
-          longitude: { type: 'number', description: 'Longitude coordinate' },
-          cityName: { type: 'string', description: 'Name of the city/location' },
+          cityName: { type: 'string', description: 'Name of the city/location (e.g. "Mumbai", "Delhi", "Pune")' },
+          latitude: { type: 'number', description: 'Latitude coordinate (optional if cityName provided)' },
+          longitude: { type: 'number', description: 'Longitude coordinate (optional if cityName provided)' },
         },
-        required: ['latitude', 'longitude'],
       },
     },
   },
@@ -485,15 +595,14 @@ const TOOL_DEFINITIONS = [
       parameters: {
         type: 'object',
         properties: {
-          latitude: { type: 'number', description: 'Latitude coordinate' },
-          longitude: { type: 'number', description: 'Longitude coordinate' },
-          cityName: { type: 'string', description: 'Name of the city/location' },
+          cityName: { type: 'string', description: 'Name of the city/location (e.g. "Mumbai", "Delhi", "Pune")' },
+          latitude: { type: 'number', description: 'Latitude coordinate (optional if cityName provided)' },
+          longitude: { type: 'number', description: 'Longitude coordinate (optional if cityName provided)' },
           days: {
             type: 'integer',
             description: 'Number of past days (e.g. 30 for 1 month, 60 for 2 months — maximum supported is 30).',
           },
         },
-        required: ['latitude', 'longitude'],
       },
     },
   },
@@ -531,6 +640,7 @@ async function executeTool(name, args, conversationId) {
 }
 
 module.exports = {
+  CITY_ALIASES,
   getLocationCoordinates,
   getCurrentAirQuality,
   getForecastAirQuality,

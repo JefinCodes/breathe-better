@@ -25,7 +25,7 @@ function getPool() {
       },
       max: 10,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 5000,
+      connectionTimeoutMillis: 3000,
     });
 
     pool.on('error', (err) => {
@@ -56,9 +56,12 @@ async function initializeChatbotSchema() {
           last_city VARCHAR(255),
           last_latitude DOUBLE PRECISION,
           last_longitude DOUBLE PRECISION,
+          pending_intent VARCHAR(100),
           created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
         );
+
+        ALTER TABLE chatbot_sessions ADD COLUMN IF NOT EXISTS pending_intent VARCHAR(100);
 
         CREATE TABLE IF NOT EXISTS chatbot_messages (
           id SERIAL PRIMARY KEY,
@@ -84,7 +87,7 @@ async function initializeChatbotSchema() {
 /**
  * Retrieves the session object for a conversation_id.
  * @param {string} conversationId
- * @returns {Promise<{ conversation_id: string, last_city: string|null, last_latitude: number|null, last_longitude: number|null }>}
+ * @returns {Promise<{ conversation_id: string, last_city: string|null, last_latitude: number|null, last_longitude: number|null, pending_intent: string|null }>}
  */
 async function getSession(conversationId) {
   if (!conversationId) return null;
@@ -93,7 +96,7 @@ async function getSession(conversationId) {
   if (p && isInitialized) {
     try {
       const res = await p.query(
-        'SELECT conversation_id, last_city, last_latitude, last_longitude FROM chatbot_sessions WHERE conversation_id = $1',
+        'SELECT conversation_id, last_city, last_latitude, last_longitude, pending_intent FROM chatbot_sessions WHERE conversation_id = $1',
         [conversationId]
       );
       if (res.rows.length > 0) {
@@ -109,29 +112,38 @@ async function getSession(conversationId) {
     last_city: null,
     last_latitude: null,
     last_longitude: null,
+    pending_intent: null,
   };
 }
 
 /**
- * Upserts a session, recording the last discussed city and its coordinates.
+ * Upserts a session, recording the last discussed city, coordinates, and pending intent.
  * @param {string} conversationId
  * @param {object} updates
  */
-async function upsertSession(conversationId, { lastCity, lastLatitude, lastLongitude }) {
+async function upsertSession(conversationId, { lastCity, lastLatitude, lastLongitude, pendingIntent }) {
   if (!conversationId) return;
 
   const p = getPool();
   if (p && isInitialized) {
     try {
       await p.query(
-        `INSERT INTO chatbot_sessions (conversation_id, last_city, last_latitude, last_longitude, updated_at)
-         VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
+        `INSERT INTO chatbot_sessions (conversation_id, last_city, last_latitude, last_longitude, pending_intent, updated_at)
+         VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP)
          ON CONFLICT (conversation_id) DO UPDATE SET
            last_city = COALESCE($2, chatbot_sessions.last_city),
            last_latitude = COALESCE($3, chatbot_sessions.last_latitude),
            last_longitude = COALESCE($4, chatbot_sessions.last_longitude),
+           pending_intent = CASE WHEN $6 = true THEN $5 ELSE chatbot_sessions.pending_intent END,
            updated_at = CURRENT_TIMESTAMP`,
-        [conversationId, lastCity || null, lastLatitude ?? null, lastLongitude ?? null]
+        [
+          conversationId,
+          lastCity || null,
+          lastLatitude ?? null,
+          lastLongitude ?? null,
+          pendingIntent ?? null,
+          pendingIntent !== undefined,
+        ]
       );
       return;
     } catch (err) {
@@ -145,6 +157,7 @@ async function upsertSession(conversationId, { lastCity, lastLatitude, lastLongi
     last_city: null,
     last_latitude: null,
     last_longitude: null,
+    pending_intent: null,
   };
 
   memorySessions.set(conversationId, {
@@ -152,6 +165,7 @@ async function upsertSession(conversationId, { lastCity, lastLatitude, lastLongi
     last_city: lastCity !== undefined ? lastCity : existing.last_city,
     last_latitude: lastLatitude !== undefined ? lastLatitude : existing.last_latitude,
     last_longitude: lastLongitude !== undefined ? lastLongitude : existing.last_longitude,
+    pending_intent: pendingIntent !== undefined ? pendingIntent : existing.pending_intent,
     updated_at: new Date(),
   });
 }
