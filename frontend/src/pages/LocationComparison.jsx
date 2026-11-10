@@ -135,11 +135,11 @@ export default function LocationComparison() {
           <button
             type="button"
             onClick={handleRefreshAll}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="flex items-center justify-center p-2 rounded-xl text-gray-700 bg-slate-100/90 hover:bg-slate-200/90 transition-colors"
             title="Refresh air quality data"
+            aria-label="Refresh air quality data"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Refresh Data</span>
+            <RefreshCw className="w-4 h-4 text-emerald-600" />
           </button>
         }
       />
@@ -159,6 +159,17 @@ export default function LocationComparison() {
               Select multiple Indian cities to evaluate real-time pollution metrics, historical trends, and determine where the air is cleaner.
             </p>
           </div>
+
+          {/* Desktop Refresh Button (placed here so header is not affected) */}
+          <button
+            type="button"
+            onClick={handleRefreshAll}
+            className="hidden md:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-gray-700 bg-white border border-gray-200 shadow-xs hover:bg-gray-50 hover:border-gray-300 transition-all self-start sm:self-center flex-shrink-0"
+            title="Refresh air quality data"
+          >
+            <RefreshCw className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Refresh Data</span>
+          </button>
         </div>
 
         {/* 1. Multi-City Autocomplete Selection */}

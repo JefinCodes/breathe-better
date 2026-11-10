@@ -129,15 +129,15 @@ export default function HistoricalTracker() {
             type="button"
             onClick={() => historyQuery.refetch()}
             disabled={historyQuery.isFetching}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 transition-colors"
+            className="flex items-center justify-center p-2 rounded-xl text-gray-700 bg-slate-100/90 hover:bg-slate-200/90 disabled:opacity-50 transition-colors"
             title="Refresh historical data"
+            aria-label="Refresh historical data"
           >
             <RefreshCw
-              className={`w-3.5 h-3.5 ${
-                historyQuery.isFetching ? 'animate-spin text-emerald-600' : ''
+              className={`w-4 h-4 text-emerald-600 ${
+                historyQuery.isFetching ? 'animate-spin' : ''
               }`}
             />
-            <span className="hidden sm:inline">Refresh Data</span>
           </button>
         }
       />
@@ -145,17 +145,35 @@ export default function HistoricalTracker() {
       {/* Main Content */}
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6 pb-20">
         {/* Page Header */}
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide mb-2">
-            <History className="w-3.5 h-3.5" />
-            Page 4 • Historical Pollution Tracker
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide mb-2">
+              <History className="w-3.5 h-3.5" />
+              Page 4 • Historical Pollution Tracker
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+              Historical Air Quality &amp; Pollutant Tracker
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              Analyze historical hourly AQI trends, track individual pollutant concentrations, and inspect air quality metrics for any verified Indian city.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-            Historical Air Quality &amp; Pollutant Tracker
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-1">
-            Analyze historical hourly AQI trends, track individual pollutant concentrations, and inspect air quality metrics for any verified Indian city.
-          </p>
+
+          {/* Desktop Refresh Button (placed here so header is not affected) */}
+          <button
+            type="button"
+            onClick={() => historyQuery.refetch()}
+            disabled={historyQuery.isFetching}
+            className="hidden md:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-gray-700 bg-white border border-gray-200 shadow-xs hover:bg-gray-50 hover:border-gray-300 disabled:opacity-50 transition-all self-start sm:self-center flex-shrink-0"
+            title="Refresh historical data"
+          >
+            <RefreshCw
+              className={`w-3.5 h-3.5 text-emerald-600 ${
+                historyQuery.isFetching ? 'animate-spin' : ''
+              }`}
+            />
+            <span>Refresh Data</span>
+          </button>
         </div>
 
         {/* 1. City Selector Section */}

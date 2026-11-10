@@ -9,7 +9,6 @@ import {
   Menu,
   X,
   ChevronRight,
-  Wind,
   Sparkles,
 } from 'lucide-react';
 
@@ -69,14 +68,15 @@ const NAV_ITEMS = [
  * Modern responsive navigation header for Breathe Better.
  * Features:
  * - Frosted glassmorphism bar with top emerald accent stripe
- * - Clear brand identity with live AQI status pill
- * - Sleek floating segmented pill navigation on desktop
+ * - Consistent brand identity with logo and clean typography
+ * - Sleek floating segmented pill navigation on desktop (undisturbed by page actions)
  * - Full-featured hamburger menu drawer for mobile screens (< md)
+ * - Page-specific mobile actions (rightContent) rendered only on mobile alongside hamburger
  * - Auto-dismiss on route change, escape key, or backdrop click
  * - Body scroll lock on mobile when drawer is active
  *
  * @param {object} props
- * @param {React.ReactNode} [props.rightContent] - Optional right-aligned action (e.g. Refresh Data button)
+ * @param {React.ReactNode} [props.rightContent] - Optional right-aligned action (rendered on mobile headers)
  */
 export default function Navbar({ rightContent }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -135,7 +135,7 @@ export default function Navbar({ rightContent }) {
 
       {/* Main navigation row */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3 sm:gap-6">
-        {/* Brand identity: Logo, Name & Live status badge */}
+        {/* Brand identity: Logo & Name */}
         <div className="flex items-center gap-3">
           <NavLink
             to="/"
@@ -155,15 +155,6 @@ export default function Navbar({ rightContent }) {
               </span>
             </div>
           </NavLink>
-
-          {/* Live indicator badge */}
-          <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-xs select-none">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-            </span>
-            LIVE AQI
-          </span>
         </div>
 
         {/* Desktop Navigation links (hidden on mobile, visible on md and up) */}
@@ -201,10 +192,10 @@ export default function Navbar({ rightContent }) {
           ))}
         </nav>
 
-        {/* Right action area: Page-specific button + Mobile hamburger toggle */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        {/* Right action area on mobile screens: Page action + Hamburger toggle */}
+        <div className="flex items-center gap-2 flex-shrink-0 md:hidden">
           {rightContent && (
-            <div className="flex-shrink-0 transition-opacity">
+            <div className="flex-shrink-0">
               {rightContent}
             </div>
           )}
@@ -213,7 +204,7 @@ export default function Navbar({ rightContent }) {
           <button
             type="button"
             onClick={toggleMobileMenu}
-            className={`md:hidden relative p-2 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 flex items-center justify-center ${
+            className={`relative p-2 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 flex items-center justify-center ${
               isMobileMenuOpen
                 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs rotate-90'
                 : 'text-slate-700 bg-slate-100/90 hover:bg-slate-200/90 hover:text-slate-900 border border-slate-200/70'
@@ -253,27 +244,6 @@ export default function Navbar({ rightContent }) {
         }`}
       >
         <div className="p-4 sm:p-5 space-y-3.5">
-          {/* Mobile status banner */}
-          <div className="p-3 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-slate-50 border border-emerald-100/80 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs">
-                <Wind className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-slate-800">
-                  India Air Quality Monitor
-                </p>
-                <p className="text-[11px] text-slate-500">
-                  CPCB & OpenAQ Live Feed
-                </p>
-              </div>
-            </div>
-            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-white text-emerald-700 border border-emerald-200/70 shadow-2xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              ACTIVE
-            </span>
-          </div>
-
           {/* Navigation Links List */}
           <nav className="space-y-1.5" aria-label="Mobile menu links">
             {NAV_ITEMS.map((item) => (
