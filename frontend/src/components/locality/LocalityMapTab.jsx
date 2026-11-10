@@ -375,7 +375,7 @@ export default function LocalityMapTab({
       {/* Leaflet Map Canvas */}
       <div
         ref={mapContainerRef}
-        className="w-full h-[540px] sm:h-[620px] bg-slate-100 relative z-0"
+        className="w-full h-[540px] sm:h-[620px] bg-slate-100 relative z-0 isolate"
       />
 
       {/* Thread Discussion Drawer / Widget (Overlay on Right Side) */}

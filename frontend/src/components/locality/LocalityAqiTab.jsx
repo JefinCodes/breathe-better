@@ -6,11 +6,22 @@ import {
   TrendingUp,
   Activity,
   Clock,
-  Sparkles,
   Loader2,
   RefreshCw,
 } from 'lucide-react';
 import { getCurrentConditions, getForecast } from '../../api/airQuality';
+import { formatUnit } from '../../lib/utils';
+
+// Helper to ensure units are strictly short symbols
+function getShortUnit(rawUnit) {
+  if (!rawUnit) return 'µg/m³';
+  const u = String(rawUnit).trim().toUpperCase();
+  if (u.includes('MICRO') || u.includes('UG') || u.includes('µG') || u === 'MICROGRAMS_PER_CUBIC_METER') return 'µg/m³';
+  if (u.includes('BILLION') || u === 'PPB' || u === 'PARTS_PER_BILLION') return 'ppb';
+  if (u.includes('MILLION') || u === 'PPM' || u === 'PARTS_PER_MILLION') return 'ppm';
+  if (u.includes('MILLIGRAM') || u === 'MG/M3' || u === 'MG/M³') return 'mg/m³';
+  return formatUnit(rawUnit) || rawUnit;
+}
 
 // Hardcoded health advisory texts matching dashboard standards
 const HEALTH_ADVISORIES = {
@@ -245,10 +256,6 @@ export default function LocalityAqiTab({ locality }) {
 
           <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
             <span>CPCB India Air Quality Standard</span>
-            <span className="text-emerald-700 font-semibold flex items-center gap-1">
-              <Sparkles className="w-3 h-3" />
-              <span>Real-time</span>
-            </span>
           </div>
         </div>
 
@@ -291,9 +298,6 @@ export default function LocalityAqiTab({ locality }) {
               <Clock className="w-3 h-3 text-slate-400" />
               <span>Calculated across 24 hourly forecasts</span>
             </span>
-            <span className="text-emerald-300 font-medium text-[10px]">
-              Post-24h data discarded
-            </span>
           </div>
         </div>
       </div>
@@ -311,7 +315,7 @@ export default function LocalityAqiTab({ locality }) {
               (p) => p.code?.toLowerCase() === code || p.displayName?.toLowerCase().includes(code)
             );
             const value = item?.concentration?.value != null ? Math.round(item.concentration.value * 10) / 10 : '--';
-            const units = item?.concentration?.units || 'µg/m³';
+            const units = getShortUnit(item?.concentration?.units);
             const name = item?.displayName || code.toUpperCase();
 
             return (
@@ -323,9 +327,9 @@ export default function LocalityAqiTab({ locality }) {
                   <span className="text-[11px] font-bold text-slate-700 uppercase">{name}</span>
                   <span className="text-[9px] text-slate-400 uppercase font-mono">{code}</span>
                 </div>
-                <div className="my-1.5">
-                  <span className="text-lg font-black text-slate-900">{value}</span>
-                  <span className="text-[10px] text-slate-400 ml-1">{units}</span>
+                <div className="my-1.5 flex items-baseline gap-1 min-w-0">
+                  <span className="text-lg font-black text-slate-900 leading-none">{value}</span>
+                  <span className="text-[10px] text-slate-400 font-medium truncate">{units}</span>
                 </div>
                 <div className="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
                   <div

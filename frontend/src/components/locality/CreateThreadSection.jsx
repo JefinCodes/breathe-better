@@ -295,8 +295,8 @@ export default function CreateThreadSection({
                   {coords.lat.toFixed(5)}° N, {coords.lng.toFixed(5)}° E
                 </span>
               </div>
-              <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-200">
-                <div ref={mapContainerRef} className="w-full h-full" />
+              <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-200 relative isolate z-0">
+                <div ref={mapContainerRef} className="w-full h-full relative z-0" />
               </div>
             </div>
           )}

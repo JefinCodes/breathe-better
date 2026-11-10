@@ -4,11 +4,9 @@ import {
   MessageSquare,
   MapPin,
   CheckCircle2,
-  Trash2,
   Bell,
   ArrowRight,
   Loader2,
-  Clock,
   Sparkles,
 } from 'lucide-react';
 import { deleteThread } from '../../api/locality';
