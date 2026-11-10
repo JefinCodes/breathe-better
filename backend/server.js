@@ -45,6 +45,11 @@ app.use(express.json());
 // Routes
 // ---------------------------------------------------------------------------
 
+// Root route
+app.get('/', (_req, res) => {
+  res.send('Backend running');
+});
+
 app.use('/api/cities', citiesRouter);
 app.use('/api/air-quality', airQualityRouter);
 app.use('/api/chatbot', chatbotRouter);
