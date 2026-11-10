@@ -160,11 +160,11 @@ export default function AirQualityVerdict({
   const bestColors = getAqiColors(scaleUsed.code, bestCity.activeAqi);
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-5">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-gray-100 pb-4">
         <div>
-          <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
             <Award className="w-5 h-5 text-emerald-600" />
             F. Air Quality Verdict & Ranking
           </h2>
@@ -173,27 +173,27 @@ export default function AirQualityVerdict({
           </p>
         </div>
 
-        <div className="text-xs px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-100 font-medium">
+        <div className="text-xs px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-100 font-medium self-start sm:self-auto">
           Comparable Scale: {scaleUsed.name} ({scaleUsed.range})
         </div>
       </div>
 
       {/* Hero Verdict Card */}
-      <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-2xl border border-emerald-200/80 p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-xs">
+      <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-2xl border border-emerald-200/80 p-4 sm:p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-5 shadow-xs">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider shadow-xs">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Cleanest Air Among Compared Locations
           </div>
 
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
             {bestCity.cityName}
-            <span className="text-base font-normal text-gray-500 ml-2">
+            <span className="text-sm sm:text-base font-normal text-gray-500 ml-2">
               ({bestCity.state})
             </span>
           </h3>
 
-          <p className="text-sm text-gray-700 leading-relaxed max-w-xl">
+          <p className="text-xs sm:text-sm text-gray-700 leading-relaxed max-w-xl">
             <strong>{bestCity.cityName}</strong> currently enjoys the best air quality among selected cities
             with an AQI of <strong>{bestCity.activeAqi}</strong> ({bestCity.category}).
             {aqiDiff > 0 && (
@@ -209,11 +209,11 @@ export default function AirQualityVerdict({
         </div>
 
         {/* Winner AQI Score Badge */}
-        <div className="flex md:flex-col items-center justify-center p-4 bg-white/90 rounded-2xl border border-emerald-200 shadow-sm flex-shrink-0 min-w-32 text-center">
-          <span className={cn('text-4xl font-black leading-none', bestColors.text)}>
+        <div className="flex md:flex-col items-center justify-center p-3 sm:p-4 bg-white/90 rounded-2xl border border-emerald-200 shadow-sm flex-shrink-0 min-w-28 sm:min-w-32 text-center gap-2 md:gap-0">
+          <span className={cn('text-3xl sm:text-4xl font-black leading-none', bestColors.text)}>
             {bestCity.activeAqi}
           </span>
-          <span className="text-xs font-bold text-gray-700 mt-1 uppercase">
+          <span className="text-xs font-bold text-gray-700 mt-0.5 sm:mt-1 uppercase">
             {bestCity.category}
           </span>
           <span className="text-[10px] text-gray-400 mt-0.5">

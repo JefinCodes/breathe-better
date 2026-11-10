@@ -56,8 +56,8 @@ export default function KeyPollutantsGrid() {
   return (
     <section id="pollutants" className="space-y-6">
       {/* Section Header */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-7 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-7 space-y-3.5 sm:space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div>
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
@@ -67,7 +67,7 @@ export default function KeyPollutantsGrid() {
                 Criteria Pollutants
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
               Key Air Pollutants Monitored by CPCB
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 mt-1 max-w-2xl">
@@ -111,7 +111,7 @@ export default function KeyPollutantsGrid() {
         {filteredPollutants.map((pollutant) => (
           <div
             key={pollutant.id}
-            className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:border-gray-200 transition-all flex flex-col justify-between group"
+            className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 hover:shadow-md hover:border-gray-200 transition-all flex flex-col justify-between group"
           >
             <div className="space-y-4">
               {/* Header: Symbol & Name & Averaging Window */}

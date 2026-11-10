@@ -116,18 +116,18 @@ export default function Locality() {
     <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-emerald-500 selection:text-white">
       <Navbar />
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6 pb-20">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 pb-20">
         {/* Page Hero & Header Banner */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white p-6 sm:p-8 shadow-xl border border-slate-800">
+        <div className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white p-4 sm:p-6 md:p-8 shadow-xl border border-slate-800">
           <div className="absolute top-0 right-0 -mt-10 -mr-10 w-72 h-72 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5 sm:gap-6">
             <div className="max-w-2xl space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/20 text-emerald-400 text-xs font-bold tracking-wide">
                 <Users className="w-3.5 h-3.5" />
                 <span>HYPER-LOCAL COMMUNITY ACTION</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
                 Turn Awareness into Action
               </h1>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
@@ -266,27 +266,29 @@ export default function Locality() {
             <button
               type="button"
               onClick={() => setActiveDashboardTab('aqi')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1.5 sm:gap-2 ${
                 activeDashboardTab === 'aqi'
                   ? 'bg-white text-emerald-800 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Activity className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Locality AQI & 24h Forecast</span>
+              <span className="sm:hidden">AQI &amp; 24h</span>
+              <span className="hidden sm:inline">Locality AQI &amp; 24h Forecast</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveDashboardTab('map')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1.5 sm:gap-2 ${
                 activeDashboardTab === 'map'
                   ? 'bg-white text-emerald-800 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Layers className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Locality Map & Community Pins</span>
+              <span className="sm:hidden">Map &amp; Pins</span>
+              <span className="hidden sm:inline">Locality Map &amp; Community Pins</span>
               {threads.length > 0 && (
                 <span className="px-1.5 py-0.2 rounded-full bg-emerald-100 text-[10px] text-emerald-800 font-extrabold">
                   {threads.length}

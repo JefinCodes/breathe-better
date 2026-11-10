@@ -171,28 +171,28 @@ export default function ChatbotWidget() {
   };
 
   return (
-    <aside aria-label="Breathe Better AI Assistant" className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
+    <aside aria-label="Breathe Better AI Assistant" className="fixed bottom-3.5 right-3.5 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
       {/* Expanded Chatbot Modal / Panel */}
       {isOpen && (
         <div
           role="dialog"
           aria-label="Air Quality Chat Interface"
-          className="mb-3 w-[calc(100vw-2.5rem)] sm:w-[410px] h-[560px] max-h-[82vh] bg-white rounded-2xl shadow-2xl border border-gray-200/90 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200"
+          className="mb-3 w-[calc(100vw-1.75rem)] sm:w-[410px] h-[500px] sm:h-[560px] max-h-[80vh] sm:max-h-[82vh] bg-white rounded-2xl shadow-2xl border border-gray-200/90 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white p-3.5 sm:p-4 flex items-center justify-between shadow-xs">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-xs border border-white/20 flex items-center justify-center flex-shrink-0 shadow-inner">
-                <Wind className="w-5 h-5 text-white" />
+          <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white p-3 sm:p-4 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/15 backdrop-blur-xs border border-white/20 flex items-center justify-center flex-shrink-0 shadow-inner">
+                <Wind className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <h3 className="font-bold text-sm tracking-tight truncate">
+                  <h3 className="font-bold text-xs sm:text-sm tracking-tight truncate">
                     Breathe Better Assistant
                   </h3>
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
                 </div>
-                <div className="flex items-center gap-1 text-[11px] text-emerald-100 truncate">
+                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-emerald-100 truncate">
                   {lastCity ? (
                     <span className="inline-flex items-center gap-0.5 bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-medium text-white truncate">
                       <MapPin className="w-2.5 h-2.5" />
@@ -270,13 +270,13 @@ export default function ChatbotWidget() {
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">
                     Try asking:
                   </p>
-                  <div className="flex flex-wrap gap-1.5 justify-center max-h-48 overflow-y-auto pr-1">
+                  <div className="flex flex-wrap gap-1.5 justify-center max-h-40 sm:max-h-48 overflow-y-auto pr-1">
                     {STARTER_PROMPTS.map((prompt, idx) => (
                       <button
                         key={idx}
                         type="button"
                         onClick={() => handleSendMessage(prompt)}
-                        className="text-left text-xs bg-white hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 text-gray-700 hover:text-emerald-700 px-2.5 py-1.5 rounded-xl transition-all shadow-2xs"
+                        className="text-left text-[11px] sm:text-xs bg-white hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 text-gray-700 hover:text-emerald-700 px-2.5 py-1.5 rounded-xl transition-all shadow-2xs"
                       >
                         {prompt}
                       </button>

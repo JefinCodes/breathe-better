@@ -167,7 +167,7 @@ export default function StaticHeatmap({ metric }) {
       {/* Static map container (Zoom 4 on mobile, Zoom 5 on desktop) */}
       <div
         ref={mapContainerRef}
-        className="w-full h-[580px] sm:h-[680px] bg-slate-50 relative z-0"
+        className="w-full h-[420px] sm:h-[540px] md:h-[680px] bg-slate-50 relative z-0"
         style={{ cursor: 'default' }}
       />
 

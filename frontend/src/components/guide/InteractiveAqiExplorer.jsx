@@ -28,9 +28,9 @@ export default function InteractiveAqiExplorer() {
   ];
 
   return (
-    <section id="interactive" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-7 space-y-6">
+    <section id="interactive" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-7 space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-5 border-b border-gray-100">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 sm:pb-5 border-b border-gray-100">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
@@ -40,7 +40,7 @@ export default function InteractiveAqiExplorer() {
               Interactive Simulator
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
             Explore India’s AQI Scale in Real Time
           </h2>
         </div>
@@ -108,16 +108,16 @@ export default function InteractiveAqiExplorer() {
 
       {/* Dynamic Result Card */}
       <div
-        className="rounded-2xl p-6 sm:p-7 border transition-all space-y-5"
+        className="rounded-2xl p-4 sm:p-6 md:p-7 border transition-all space-y-4 sm:space-y-5"
         style={{
           borderColor: activeCategory.hexCode,
           backgroundColor: `${activeCategory.hexCode}0d`, // subtle 5% alpha tint
         }}
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10">
-          <div className="flex items-center gap-3.5">
+          <div className="flex items-center gap-3 sm:gap-3.5">
             <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl shadow-sm border border-black/10"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-black text-lg sm:text-xl shadow-sm border border-black/10"
               style={{
                 backgroundColor: activeCategory.hexCode,
                 color: activeCategory.textColor,
@@ -127,14 +127,14 @@ export default function InteractiveAqiExplorer() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-gray-500">
                   Current Classification
                 </span>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white text-gray-700 border border-gray-200 font-mono">
                   {activeCategory.range}
                 </span>
               </div>
-              <h3 className="text-2xl font-black text-gray-900 tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
                 {activeCategory.category}
               </h3>
             </div>

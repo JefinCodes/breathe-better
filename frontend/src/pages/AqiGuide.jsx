@@ -26,14 +26,14 @@ export default function AqiGuide() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-8 pb-20">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-6 space-y-5 sm:space-y-8 pb-20">
         {/* Page Hero Header */}
         <div className="space-y-2">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide">
             <BookOpen className="w-3.5 h-3.5" />
             Understanding India’s AQI
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
             Understanding India’s Air Quality Index (AQI)
           </h1>
           <p className="text-xs sm:text-sm text-gray-500 max-w-3xl leading-relaxed">
@@ -57,12 +57,12 @@ export default function AqiGuide() {
         <InteractiveAqiExplorer />
 
         {/* Bottom Navigation / Links to App Features */}
-        <div className="bg-gradient-to-br from-gray-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white space-y-4 shadow-sm">
+        <div className="bg-gradient-to-br from-gray-900 to-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 text-white space-y-4 shadow-sm">
           <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="w-4 h-4" />
             Breathe Better • Practical Next Steps
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight">
             Apply These Standards to Your City
           </h3>
           <p className="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed">

@@ -19,7 +19,7 @@ export default function AqiCategoriesTable() {
   return (
     <section id="categories" className="space-y-6">
       {/* Section Header */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-7 space-y-3">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-7 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
@@ -30,7 +30,7 @@ export default function AqiCategoriesTable() {
                 Official Standards
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
               CPCB AQI Categories, Color Codes &amp; Health Guidelines
             </h2>
           </div>
@@ -132,11 +132,11 @@ export default function AqiCategoriesTable() {
       </div>
 
       {/* Mobile Card View (shown below md screen width) */}
-      <div className="md:hidden space-y-4">
+      <div className="md:hidden space-y-3.5 sm:space-y-4">
         {AQI_CATEGORIES.map((cat) => (
           <div
             key={cat.range}
-            className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3 relative overflow-hidden"
+            className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 space-y-3 relative overflow-hidden"
           >
             {/* Color banner strip on left */}
             <div

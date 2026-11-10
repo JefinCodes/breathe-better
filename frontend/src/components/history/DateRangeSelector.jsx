@@ -76,8 +76,8 @@ export default function DateRangeSelector({
   const currentDiff = validateDateRange(startDate, endDate).diffDays;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
         <div>
           <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
             Historical Observation Interval
@@ -94,13 +94,13 @@ export default function DateRangeSelector({
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2 border-t border-gray-100">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 pt-2 border-t border-gray-100">
         {/* Preset quick buttons */}
-        <div className="flex items-center gap-1.5 bg-gray-100/80 p-1.5 rounded-xl self-start">
+        <div className="w-full sm:w-auto grid grid-cols-3 sm:flex items-center gap-1 sm:gap-1.5 bg-gray-100/80 p-1 sm:p-1.5 rounded-xl self-start">
           <button
             type="button"
             onClick={() => handlePresetClick(7)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-center ${
               activePreset === 7
                 ? 'bg-white text-emerald-600 shadow-xs'
                 : 'text-gray-600 hover:text-gray-900'
@@ -111,7 +111,7 @@ export default function DateRangeSelector({
           <button
             type="button"
             onClick={() => handlePresetClick(14)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-center ${
               activePreset === 14
                 ? 'bg-white text-emerald-600 shadow-xs'
                 : 'text-gray-600 hover:text-gray-900'
@@ -122,19 +122,19 @@ export default function DateRangeSelector({
           <button
             type="button"
             onClick={() => handlePresetClick(30)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-2 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-center ${
               activePreset === 30
                 ? 'bg-white text-emerald-600 shadow-xs'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
-            Past 30 Days (Max)
+            Past 30 Days
           </button>
         </div>
 
         {/* Custom Start / End Date pickers */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 border border-gray-200 text-xs">
+        <div className="w-full sm:w-auto flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 border border-gray-200 text-xs flex-1 sm:flex-initial">
             <Calendar className="w-4 h-4 text-gray-400" />
             <div className="flex items-center gap-2">
               <div className="flex flex-col">

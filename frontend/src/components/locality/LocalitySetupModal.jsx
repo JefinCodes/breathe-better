@@ -263,10 +263,10 @@ export default function LocalitySetupModal({
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-slate-100 flex flex-col max-h-[92vh] overflow-hidden">
         {/* Header Bar */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700">
-              <MapPin className="w-5 h-5" />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 flex-shrink-0">
+              <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-bold text-slate-900">
@@ -280,14 +280,14 @@ export default function LocalitySetupModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content Body: Two Columns */}
-        <div className="flex-1 overflow-y-auto p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
           {/* Left Column: Selection Controls */}
           <div className="lg:col-span-5 space-y-5">
             {errorMsg && (
@@ -506,28 +506,28 @@ export default function LocalitySetupModal({
           </div>
 
           {/* Right Column: Live Interactive Map Preview */}
-          <div className="lg:col-span-7 flex flex-col min-h-[340px]">
-            <div className="flex items-center justify-between mb-2">
+          <div className="lg:col-span-7 flex flex-col min-h-[260px] sm:min-h-[340px]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                 Live Interactive Map Preview
               </span>
-              <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">
-                Tip: Drag the pin or click anywhere on the map
+              <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium self-start sm:self-auto">
+                Tip: Drag pin or click map to reposition
               </span>
             </div>
 
-            <div className="flex-1 w-full rounded-2xl border border-slate-200 overflow-hidden relative shadow-inner bg-slate-100 min-h-[300px]">
-              <div ref={mapContainerRef} className="w-full h-full min-h-[320px] relative z-0" />
+            <div className="flex-1 w-full rounded-2xl border border-slate-200 overflow-hidden relative shadow-inner bg-slate-100 min-h-[240px] sm:min-h-[300px]">
+              <div ref={mapContainerRef} className="w-full h-full min-h-[240px] sm:min-h-[320px] relative z-0" />
             </div>
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className="px-6 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+            className="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
           >
             Cancel
           </button>
@@ -536,7 +536,7 @@ export default function LocalitySetupModal({
             type="button"
             onClick={handleSaveLocality}
             disabled={isSaving}
-            className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-4 sm:px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-2 disabled:opacity-50"
           >
             {isSaving ? (
               <Loader2 className="w-4 h-4 animate-spin" />

@@ -67,9 +67,9 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
       )}
 
       {/* Grid of 4 Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Card 1: Average AQI */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between space-y-3 hover:border-gray-200 transition-colors">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 flex flex-col justify-between space-y-2.5 sm:space-y-3 hover:border-gray-200 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Average AQI
@@ -81,7 +81,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
 
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              <span className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                 {hasData && averageAqi != null ? averageAqi : '—'}
               </span>
               {hasData && avgCategory && (
@@ -104,7 +104,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
         </div>
 
         {/* Card 2: Maximum AQI */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between space-y-3 hover:border-gray-200 transition-colors">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 flex flex-col justify-between space-y-2.5 sm:space-y-3 hover:border-gray-200 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Maximum AQI (Peak)
@@ -116,7 +116,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
 
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              <span className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                 {hasData && maxAqi != null ? maxAqi : '—'}
               </span>
               {hasData && maxCategory && (
@@ -138,7 +138,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
         </div>
 
         {/* Card 3: Minimum AQI */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between space-y-3 hover:border-gray-200 transition-colors">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 flex flex-col justify-between space-y-2.5 sm:space-y-3 hover:border-gray-200 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Minimum AQI (Cleanest)
@@ -150,7 +150,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
 
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              <span className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                 {hasData && minAqi != null ? minAqi : '—'}
               </span>
               {hasData && minCategory && (
@@ -172,7 +172,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
         </div>
 
         {/* Card 4: Available Observations */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col justify-between space-y-3 hover:border-gray-200 transition-colors">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 flex flex-col justify-between space-y-2.5 sm:space-y-3 hover:border-gray-200 transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Available Observations
@@ -184,7 +184,7 @@ export default function HistoricalSummaryCards({ stats, isLoading }) {
 
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              <span className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                 {availableObservations}
               </span>
               <span className="text-xs font-semibold text-gray-400">

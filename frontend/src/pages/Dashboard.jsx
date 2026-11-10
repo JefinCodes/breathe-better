@@ -192,12 +192,12 @@ export default function Dashboard() {
       {/* ------------------------------------------------------------------ */}
       {/* Main dashboard content */}
       {/* ------------------------------------------------------------------ */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-6 pb-16">
+      <main className="max-w-5xl mx-auto px-3.5 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 pb-16">
 
         {/* ---------------------------------------------------------------- */}
         {/* Top Section: City Selection & Location Controls                 */}
         {/* ---------------------------------------------------------------- */}
-        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
+        <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
           {/* Notification / Error message banner (if location detection failed) */}
           {locationError && (
             <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-900 flex items-start justify-between gap-3 text-xs sm:text-sm animate-fadeIn">
@@ -281,7 +281,7 @@ export default function Dashboard() {
         {!coords ? (
           /* Empty or Initial Detecting state */
           isInitialLocating ? (
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 text-center">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-12 text-center">
               <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Loader2 className="w-6 h-6 text-emerald-500 animate-spin" />
               </div>
@@ -291,19 +291,19 @@ export default function Dashboard() {
               </p>
             </div>
           ) : (
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 sm:p-12 text-center">
-              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-emerald-600">
-                <MapPin className="w-7 h-7" />
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-8 md:p-12 text-center">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 text-emerald-600">
+                <MapPin className="w-6 h-6 sm:w-7 sm:h-7" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900">
                 Select a location to see air quality data
               </h3>
-              <p className="text-sm text-gray-500 mt-1.5 max-w-md mx-auto">
+              <p className="text-xs sm:text-sm text-gray-500 mt-1.5 max-w-md mx-auto">
                 Search for an Indian city above or click &ldquo;Use current location&rdquo; to view real-time AQI, pollutant breakdown, and health recommendations.
               </p>
 
               {/* Quick Select Popular Cities */}
-              <div className="mt-6 pt-6 border-t border-gray-100 flex flex-wrap items-center justify-center gap-2">
+              <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-gray-100 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                 <span className="text-xs font-medium text-gray-400 mr-1">Popular cities:</span>
                 {POPULAR_HISTORY_CITIES.map((city) => (
                   <button

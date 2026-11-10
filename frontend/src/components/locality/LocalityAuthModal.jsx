@@ -86,7 +86,7 @@ export default function LocalityAuthModal({ isOpen, onClose, onAuthSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
         {/* Top Gradient Header Accent */}
         <div className="h-1.5 w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
@@ -98,20 +98,20 @@ export default function LocalityAuthModal({ isOpen, onClose, onAuthSuccess }) {
             onClose();
             resetForm();
           }}
-          className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="p-6 sm:p-7">
+        <div className="p-4 sm:p-6 md:p-7">
           {/* Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-5 sm:mb-6">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold mb-2">
               <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
               <span>Locality Community</span>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
               {tab === 'login' ? 'Welcome Back' : 'Join Your Locality'}
             </h2>
             <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">

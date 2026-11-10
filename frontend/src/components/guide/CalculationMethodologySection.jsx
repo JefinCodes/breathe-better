@@ -13,9 +13,9 @@ import { CALCULATION_STEPS, CPCB_STATION_RULE } from '../../lib/aqiGuideData';
  */
 export default function CalculationMethodologySection() {
   return (
-    <section id="calculation" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-7 space-y-7">
+    <section id="calculation" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-7 space-y-5 sm:space-y-7">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-5 border-b border-gray-100">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 sm:pb-5 border-b border-gray-100">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
@@ -25,7 +25,7 @@ export default function CalculationMethodologySection() {
               CPCB Methodology
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight mt-1">
             How Does CPCB Calculate AQI?
           </h2>
         </div>
@@ -35,7 +35,7 @@ export default function CalculationMethodologySection() {
       </div>
 
       {/* Mandatory Station Rule Alert */}
-      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex flex-col sm:flex-row items-start gap-4">
+      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
         <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 mt-0.5">
           <AlertTriangle className="w-5 h-5" />
         </div>
@@ -67,7 +67,7 @@ export default function CalculationMethodologySection() {
           return (
             <div
               key={item.step}
-              className="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex flex-col justify-between relative hover:border-emerald-200 transition-colors group"
+              className="bg-gray-50 rounded-2xl p-4 sm:p-5 border border-gray-100 flex flex-col justify-between relative hover:border-emerald-200 transition-colors group"
             >
               <div className="space-y-3">
                 {/* Step pill */}

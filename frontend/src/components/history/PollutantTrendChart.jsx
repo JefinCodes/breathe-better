@@ -43,9 +43,9 @@ export default function PollutantTrendChart({
     : 1;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
       {/* Header and stats strip */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-3 border-b border-gray-100">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4 pb-3 border-b border-gray-100">
         <div>
           <h3 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
             <TrendingUp className="w-4 h-4 text-emerald-600" />
@@ -61,22 +61,22 @@ export default function PollutantTrendChart({
 
         {/* Selected Pollutant Summary Badges */}
         {validPoints > 0 && (
-          <div className="flex flex-wrap items-center gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs">
             {stats.average != null && (
-              <div className="px-3 py-1.5 rounded-xl bg-gray-50 border border-gray-200">
-                <span className="text-gray-400 mr-1.5">Avg:</span>
+              <div className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-gray-50 border border-gray-200 text-xs">
+                <span className="text-gray-400 mr-1 sm:mr-1.5">Avg:</span>
                 <span className="font-bold text-gray-900">{stats.average} {unit}</span>
               </div>
             )}
             {stats.max != null && (
-              <div className="px-3 py-1.5 rounded-xl bg-red-50 border border-red-100">
-                <span className="text-red-500 mr-1.5">Max:</span>
+              <div className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-red-50 border border-red-100 text-xs">
+                <span className="text-red-500 mr-1 sm:mr-1.5">Max:</span>
                 <span className="font-bold text-red-700">{stats.max} {unit}</span>
               </div>
             )}
             {stats.min != null && (
-              <div className="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-100">
-                <span className="text-emerald-600 mr-1.5">Min:</span>
+              <div className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-emerald-50 border border-emerald-100 text-xs">
+                <span className="text-emerald-600 mr-1 sm:mr-1.5">Min:</span>
                 <span className="font-bold text-emerald-800">{stats.min} {unit}</span>
               </div>
             )}
@@ -85,7 +85,7 @@ export default function PollutantTrendChart({
       </div>
 
       {/* Chart */}
-      <div className="h-80 sm:h-96 w-full pt-2">
+      <div className="h-64 sm:h-80 md:h-96 w-full pt-2">
         {!hasData || validPoints === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-gray-400">
             <AlertCircle className="w-8 h-8 text-gray-300 mb-2" />
@@ -96,7 +96,7 @@ export default function PollutantTrendChart({
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
-              margin={{ top: 15, right: 25, left: 0, bottom: 20 }}
+              margin={{ top: 15, right: 15, left: -5, bottom: 20 }}
             >
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
 

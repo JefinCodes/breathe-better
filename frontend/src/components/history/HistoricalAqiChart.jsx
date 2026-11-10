@@ -52,7 +52,7 @@ export default function HistoricalAqiChart({
     : 1;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-gray-100">
         <div>
@@ -76,7 +76,7 @@ export default function HistoricalAqiChart({
       </div>
 
       {/* Chart container */}
-      <div className="h-80 sm:h-96 w-full pt-2">
+      <div className="h-64 sm:h-80 md:h-96 w-full pt-2">
         {!hasData ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-gray-400">
             <AlertCircle className="w-8 h-8 text-gray-300 mb-2" />
@@ -87,7 +87,7 @@ export default function HistoricalAqiChart({
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
-              margin={{ top: 15, right: 25, left: 0, bottom: 20 }}
+              margin={{ top: 15, right: 15, left: -5, bottom: 20 }}
             >
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
 

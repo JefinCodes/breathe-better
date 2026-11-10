@@ -94,11 +94,11 @@ export default function HistoricalPollutantChart({
   });
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-5">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
       {/* Header & Pollutant Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-4">
         <div>
-          <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-emerald-600" />
             E. Historical Pollutant Comparison
           </h2>
@@ -114,7 +114,7 @@ export default function HistoricalPollutantChart({
               key={p.code}
               type="button"
               onClick={() => setSelectedPollutantCode(p.code)}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
+              className={`px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
                 selectedPollutantCode === p.code
                   ? 'bg-white text-emerald-600 shadow-xs'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-white/40'
@@ -127,7 +127,7 @@ export default function HistoricalPollutantChart({
       </div>
 
       {/* Pollutant Info Strip */}
-      <div className="flex items-center justify-between text-xs bg-gray-50 p-2.5 rounded-xl border border-gray-150">
+      <div className="flex items-center justify-between text-xs bg-gray-50 p-2.5 rounded-xl border border-gray-150 flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <Info className="w-4 h-4 text-emerald-600 flex-shrink-0" />
           <span className="font-semibold text-gray-800">
@@ -140,16 +140,16 @@ export default function HistoricalPollutantChart({
       </div>
 
       {/* Chart */}
-      <div className="h-88 w-full">
+      <div className="h-72 sm:h-88 w-full">
         {chartData.length === 0 ? (
           <div className="h-full flex items-center justify-center text-xs text-gray-400">
             No historical records found for {currentPollutant.label} during this time frame.
           </div>
         ) : (
-          <ResponsiveContainer width="100%" height={360}>
+          <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
-              margin={{ top: 20, right: 30, left: 10, bottom: 25 }}
+              margin={{ top: 20, right: 20, left: 0, bottom: 25 }}
             >
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
               <XAxis

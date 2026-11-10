@@ -31,7 +31,7 @@ export default function HeatmapLegend({ metric }) {
     : 'Concentration (lower value indicates cleaner air)';
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm space-y-3">
+    <div className="bg-white border border-gray-200 rounded-xl p-3.5 sm:p-4 shadow-sm space-y-3">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
         <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">
           {title}
@@ -57,19 +57,19 @@ export default function HeatmapLegend({ metric }) {
       <div
         className={`grid grid-cols-2 sm:grid-cols-3 ${
           isAqi ? 'md:grid-cols-5' : 'md:grid-cols-6'
-        } gap-2 pt-1`}
+        } gap-1.5 sm:gap-2 pt-1`}
       >
         {levels.map((lvl, idx) => (
           <div
             key={idx}
-            className="flex flex-col items-start p-2 rounded-lg bg-gray-50/80 border border-gray-100"
+            className="flex flex-col items-start p-1.5 sm:p-2 rounded-lg bg-gray-50/80 border border-gray-100"
           >
             <div className="flex items-center gap-1.5 w-full">
               <span
                 className="w-2.5 h-2.5 rounded-full shrink-0"
                 style={{ backgroundColor: lvl.color }}
               />
-              <span className="text-xs font-bold text-gray-800 truncate">
+              <span className="text-[11px] sm:text-xs font-bold text-gray-800 truncate">
                 {lvl.range}
               </span>
             </div>

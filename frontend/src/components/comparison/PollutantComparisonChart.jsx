@@ -79,11 +79,11 @@ export default function PollutantComparisonChart({
   });
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-5">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-4">
         <div>
-          <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
             <Layers className="w-5 h-5 text-emerald-600" />
             C. Pollutant-Wise Comparison
           </h2>
@@ -99,7 +99,7 @@ export default function PollutantComparisonChart({
               key={p.code}
               type="button"
               onClick={() => setActiveTab(p.code)}
-              className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
+              className={`px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
                 activeTab === p.code
                   ? 'bg-white text-emerald-600 shadow-xs'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-white/40'
@@ -113,7 +113,7 @@ export default function PollutantComparisonChart({
 
       {/* Single Pollutant Chart */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between text-xs text-gray-500 bg-emerald-50/50 p-2.5 rounded-xl border border-emerald-100">
+        <div className="flex items-center justify-between text-xs text-gray-500 bg-emerald-50/50 p-2.5 rounded-xl border border-emerald-100 flex-wrap gap-2">
           <span className="font-semibold text-emerald-900">
             {selectedPDef?.fullName} ({selectedPDef?.label})
           </span>
@@ -122,11 +122,11 @@ export default function PollutantComparisonChart({
           </span>
         </div>
 
-        <div className="h-80 w-full">
+        <div className="h-72 sm:h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={singlePollutantChartData}
-              margin={{ top: 20, right: 30, left: 10, bottom: 25 }}
+              margin={{ top: 20, right: 20, left: 0, bottom: 25 }}
             >
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
               <XAxis

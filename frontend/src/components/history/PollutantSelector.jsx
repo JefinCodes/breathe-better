@@ -44,7 +44,7 @@ export default function PollutantSelector({
               key={pollutant.code}
               type="button"
               onClick={() => onSelectPollutant(pollutant.code.toLowerCase())}
-              className={`flex flex-col items-start p-3 rounded-xl border text-left transition-all ${
+              className={`flex flex-col items-start p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
                 isSelected
                   ? 'bg-emerald-50/70 border-emerald-500 ring-2 ring-emerald-500/20 shadow-xs'
                   : 'bg-white border-gray-200/80 hover:bg-gray-50 hover:border-gray-300'
@@ -63,15 +63,15 @@ export default function PollutantSelector({
               </div>
 
               <div className="flex items-baseline gap-1.5 w-full">
-                <span className="font-extrabold text-sm text-gray-900">
+                <span className="font-extrabold text-xs sm:text-sm text-gray-900">
                   {pollutant.label}
                 </span>
-                <span className="text-[11px] text-gray-400 font-normal">
+                <span className="text-[10px] sm:text-[11px] text-gray-400 font-normal">
                   ({pollutant.formula})
                 </span>
               </div>
 
-              <div className="flex items-center justify-between w-full mt-1.5 text-[11px]">
+              <div className="flex items-center justify-between w-full mt-1.5 text-[10px] sm:text-[11px]">
                 <span className="px-1.5 py-0.5 rounded bg-gray-100 text-gray-700 font-mono font-medium">
                   {pollutant.unit}
                 </span>

@@ -38,12 +38,12 @@ export default function CitySelectorSection({
   );
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
       {/* Title & Actions Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-emerald-600" />
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
             Selected Locations
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">

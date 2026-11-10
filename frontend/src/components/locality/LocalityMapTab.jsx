@@ -294,12 +294,12 @@ export default function LocalityMapTab({
   return (
     <div className="relative w-full rounded-3xl border border-slate-200 overflow-hidden bg-white shadow-xs">
       {/* Map Mode Toolbar */}
-      <div className="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-2">
+      <div className="absolute top-3 left-3 right-3 sm:right-auto sm:top-4 sm:left-4 z-20 flex flex-wrap items-center gap-2">
         <div className="bg-white/95 backdrop-blur-md p-1 rounded-2xl border border-slate-200 shadow-md flex items-center gap-1">
           <button
             type="button"
             onClick={() => setMapMode('pins')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1.5 ${
               mapMode === 'pins'
                 ? 'bg-emerald-600 text-white shadow-xs'
                 : 'text-slate-700 hover:bg-slate-100'
@@ -312,7 +312,7 @@ export default function LocalityMapTab({
           <button
             type="button"
             onClick={() => setMapMode('heatmap')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1.5 ${
               mapMode === 'heatmap'
                 ? 'bg-emerald-600 text-white shadow-xs'
                 : 'text-slate-700 hover:bg-slate-100'
@@ -324,7 +324,7 @@ export default function LocalityMapTab({
         </div>
 
         {mapMode === 'heatmap' && (
-          <div className="bg-white/95 backdrop-blur-md px-2 py-1 rounded-2xl border border-slate-200 shadow-md flex items-center gap-1.5 text-xs font-semibold">
+          <div className="bg-white/95 backdrop-blur-md px-2 py-1 rounded-2xl border border-slate-200 shadow-md flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold">
             <button
               type="button"
               onClick={() => setHeatmapMetric('UAQI_RED_GREEN')}
@@ -352,21 +352,21 @@ export default function LocalityMapTab({
       </div>
 
       {/* Pin Color Legend (Overlay on Bottom Left) */}
-      <div className="absolute bottom-4 left-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-slate-200/90 shadow-md text-xs space-y-1.5">
-        <span className="font-extrabold text-[10px] uppercase tracking-wider text-slate-400 block">
+      <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-20 bg-white/95 backdrop-blur-md px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-2xl border border-slate-200/90 shadow-md text-[11px] sm:text-xs space-y-1 sm:space-y-1.5 max-w-[calc(100%-1.5rem)] sm:max-w-none">
+        <span className="font-extrabold text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-400 block">
           Pin Activity Legend
         </span>
-        <div className="flex items-center gap-3 text-[11px] font-semibold text-slate-700">
-          <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 inline-block"></span>
+        <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] font-semibold text-slate-700">
+          <span className="flex items-center gap-1 sm:gap-1.5">
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-yellow-400 inline-block"></span>
             <span>≤ 10 msgs</span>
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block"></span>
+          <span className="flex items-center gap-1 sm:gap-1.5">
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-orange-500 inline-block"></span>
             <span>11 - 40 msgs</span>
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
+          <span className="flex items-center gap-1 sm:gap-1.5">
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-red-500 inline-block"></span>
             <span>&gt; 40 msgs</span>
           </span>
         </div>
@@ -375,19 +375,19 @@ export default function LocalityMapTab({
       {/* Leaflet Map Canvas */}
       <div
         ref={mapContainerRef}
-        className="w-full h-[540px] sm:h-[620px] bg-slate-100 relative z-0 isolate"
+        className="w-full h-[420px] sm:h-[540px] md:h-[620px] bg-slate-100 relative z-0 isolate"
       />
 
       {/* Thread Discussion Drawer / Widget (Overlay on Right Side) */}
       {selectedThread && (
         <div className="absolute top-0 right-0 bottom-0 z-30 w-full sm:w-[420px] bg-white border-l border-slate-200 shadow-2xl flex flex-col animate-in slide-in-from-right duration-200">
           {/* Drawer Header */}
-          <div className="p-4 border-b border-slate-100 flex items-start justify-between bg-slate-50/80">
+          <div className="p-3.5 sm:p-4 border-b border-slate-100 flex items-start justify-between bg-slate-50/80">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full">
                 Pollution Discussion Thread
               </span>
-              <h3 className="text-base font-bold text-slate-900 mt-1 leading-snug">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-1 leading-snug">
                 {selectedThread.title}
               </h3>
               <p className="text-[11px] text-slate-500 mt-0.5">
@@ -404,7 +404,7 @@ export default function LocalityMapTab({
           </div>
 
           {/* Description & Action Strip */}
-          <div className="p-4 border-b border-slate-100 bg-slate-50/40 space-y-3">
+          <div className="p-3.5 sm:p-4 border-b border-slate-100 bg-slate-50/40 space-y-3">
             <p className="text-xs text-slate-700 leading-relaxed bg-white p-3 rounded-xl border border-slate-100 shadow-2xs">
               {selectedThread.description}
             </p>
@@ -432,7 +432,7 @@ export default function LocalityMapTab({
           </div>
 
           {/* Live Message Chat Feed */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-white">
+          <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3 bg-white">
             <div className="text-center my-2">
               <span className="text-[10px] text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">
                 Community Discussion Feed
@@ -489,7 +489,7 @@ export default function LocalityMapTab({
           {/* Chat Message Input Form */}
           <form
             onSubmit={handleSendMessage}
-            className="p-3 border-t border-slate-100 bg-slate-50 flex items-center gap-2"
+            className="p-2.5 sm:p-3 border-t border-slate-100 bg-slate-50 flex items-center gap-2"
           >
             <input
               type="text"

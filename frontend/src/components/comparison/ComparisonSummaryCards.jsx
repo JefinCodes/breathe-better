@@ -50,7 +50,7 @@ export default function ComparisonSummaryCards({
           return (
             <div
               key={city.geonameid || `${city.latitude}_${city.longitude}`}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 relative overflow-hidden flex flex-col justify-between transition-shadow hover:shadow-md"
+              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 relative overflow-hidden flex flex-col justify-between transition-shadow hover:shadow-md"
             >
               {/* City Accent Top Border */}
               <div
@@ -107,18 +107,18 @@ export default function ComparisonSummaryCards({
               ) : primaryAqi ? (
                 <div className="space-y-4">
                   {/* AQI Score Block */}
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3.5 sm:gap-4">
                     <div
                       className={cn(
-                        'w-20 h-20 rounded-2xl ring-2 flex flex-col items-center justify-center flex-shrink-0 shadow-inner',
+                        'w-16 h-16 sm:w-20 sm:h-20 rounded-2xl ring-2 flex flex-col items-center justify-center flex-shrink-0 shadow-inner',
                         colors.ring,
                         colors.bg
                       )}
                     >
-                      <span className={cn('text-3xl font-black leading-none tracking-tight', colors.text)}>
+                      <span className={cn('text-2xl sm:text-3xl font-black leading-none tracking-tight', colors.text)}>
                         {primaryAqi.aqi ?? '—'}
                       </span>
-                      <span className="text-[10px] font-medium text-gray-500 mt-1">
+                      <span className="text-[9px] sm:text-[10px] font-medium text-gray-500 mt-0.5 sm:mt-1">
                         {primaryAqi.code === 'ind_cpcb' ? 'CPCB AQI' : primaryAqi.displayName || 'AQI'}
                       </span>
                     </div>

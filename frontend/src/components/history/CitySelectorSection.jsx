@@ -30,7 +30,7 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
@@ -55,7 +55,7 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
 
       {/* Selected City Highlight Card */}
       {selectedCity && (
-        <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-gradient-to-r from-emerald-50/70 via-teal-50/30 to-white border border-emerald-100/80">
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl bg-gradient-to-r from-emerald-50/70 via-teal-50/30 to-white border border-emerald-100/80">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-sm">
               <MapPin className="w-5 h-5" />

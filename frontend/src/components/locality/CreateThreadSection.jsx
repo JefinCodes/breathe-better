@@ -173,7 +173,7 @@ export default function CreateThreadSection({
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-7 shadow-xs space-y-5">
+    <div className="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 md:p-7 shadow-xs space-y-4 sm:space-y-5">
       <div className="border-b border-slate-100 pb-4">
         <h3 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
           <PlusCircle className="w-5 h-5 text-emerald-600" />
@@ -242,7 +242,7 @@ export default function CreateThreadSection({
                 setLocationMode('center');
                 setCoords({ lat: locality.latitude, lng: locality.longitude });
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
+              className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold border transition-all flex items-center gap-1.5 ${
                 locationMode === 'center'
                   ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                   : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
@@ -258,7 +258,7 @@ export default function CreateThreadSection({
                 setLocationMode('gps');
                 handleDetectGPS();
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
+              className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold border transition-all flex items-center gap-1.5 ${
                 locationMode === 'gps'
                   ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                   : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
@@ -275,7 +275,7 @@ export default function CreateThreadSection({
             <button
               type="button"
               onClick={() => setLocationMode('map')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
+              className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold border transition-all flex items-center gap-1.5 ${
                 locationMode === 'map'
                   ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                   : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
@@ -289,20 +289,20 @@ export default function CreateThreadSection({
           {/* Interactive Picker Map Canvas */}
           {locationMode === 'map' && (
             <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[11px] text-slate-500 font-medium gap-1">
                 <span>Click anywhere or drag the red pin to set the exact hotspot:</span>
                 <span className="font-mono text-slate-800 font-semibold">
                   {coords.lat.toFixed(5)}° N, {coords.lng.toFixed(5)}° E
                 </span>
               </div>
-              <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-200 relative isolate z-0">
+              <div className="w-full h-44 sm:h-48 rounded-xl overflow-hidden border border-slate-200 relative isolate z-0">
                 <div ref={mapContainerRef} className="w-full h-full relative z-0" />
               </div>
             </div>
           )}
 
           {locationMode !== 'map' && (
-            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-slate-600 text-[11px] flex items-center justify-between">
+            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-slate-600 text-[11px] flex flex-col sm:flex-row sm:items-center justify-between gap-1">
               <span>Target Pin Coordinates:</span>
               <span className="font-mono font-semibold text-slate-800">
                 {coords.lat.toFixed(5)}° N, {coords.lng.toFixed(5)}° E
@@ -312,7 +312,7 @@ export default function CreateThreadSection({
         </div>
 
         {/* Submit Action */}
-        <div className="pt-2 flex items-center justify-between">
+        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-[11px] text-slate-400">
             {currentUser
               ? `Posting as @${currentUser.username}`
@@ -322,7 +322,7 @@ export default function CreateThreadSection({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-2 disabled:opacity-50"
+            className="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {isSubmitting ? (
               <Loader2 className="w-4 h-4 animate-spin" />

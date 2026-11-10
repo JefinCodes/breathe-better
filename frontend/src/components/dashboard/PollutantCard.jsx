@@ -34,7 +34,7 @@ export default function PollutantCard({ pollutant }) {
   const hasValue = value != null;
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex flex-col justify-between">
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-4 flex flex-col justify-between">
       {/* Header */}
       <div>
         <p className="text-sm font-bold text-gray-800">{meta.label}</p>
@@ -42,14 +42,14 @@ export default function PollutantCard({ pollutant }) {
       </div>
 
       {/* Value */}
-      <div className="mt-3">
+      <div className="mt-2.5 sm:mt-3">
         {hasValue ? (
-          <p className="text-gray-900">
-            <span className="text-2xl font-bold">{value.toFixed(1)}</span>
-            <span className={cn('text-xs ml-1', 'text-gray-500')}>{unit}</span>
+          <p className="text-gray-900 flex items-baseline flex-wrap">
+            <span className="text-xl sm:text-2xl font-bold">{value.toFixed(1)}</span>
+            <span className={cn('text-[11px] sm:text-xs ml-1', 'text-gray-500')}>{unit}</span>
           </p>
         ) : (
-          <p className="text-sm text-gray-400 italic">Not available</p>
+          <p className="text-xs sm:text-sm text-gray-400 italic">Not available</p>
         )}
       </div>
     </div>

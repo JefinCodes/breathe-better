@@ -48,11 +48,11 @@ export default function AqiComparisonChart({ selectedCities, currentQueries }) {
   const yDomainMax = Math.min(500, Math.ceil((maxAqi + 50) / 50) * 50);
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4">
       {/* Title & Scale Identifier */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-4">
         <div>
-          <h2 className="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
             <BarChart3 className="w-5 h-5 text-emerald-600" />
             B. Current AQI Comparison
           </h2>
@@ -62,7 +62,7 @@ export default function AqiComparisonChart({ selectedCities, currentQueries }) {
         </div>
 
         {/* Prominent Scale Identifier Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-100 text-xs text-emerald-900">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-100 text-xs text-emerald-900 self-start sm:self-auto">
           <Info className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
           <span>
             {allCpcb ? (
@@ -79,33 +79,33 @@ export default function AqiComparisonChart({ selectedCities, currentQueries }) {
       </div>
 
       {/* CPCB Category Reference Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-6 gap-1.5 text-[11px] text-center pt-1">
-        <span className="py-1 px-2 rounded-lg bg-green-50 text-green-700 font-medium">
+      <div className="grid grid-cols-2 sm:grid-cols-6 gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-center pt-1">
+        <span className="py-0.5 sm:py-1 px-1.5 sm:px-2 rounded-lg bg-green-50 text-green-700 font-medium">
           Good (0–50)
         </span>
-        <span className="py-1 px-2 rounded-lg bg-emerald-50 text-emerald-700 font-medium">
+        <span className="py-0.5 sm:py-1 px-1.5 sm:px-2 rounded-lg bg-emerald-50 text-emerald-700 font-medium">
           Satisfactory (51–100)
         </span>
-        <span className="py-1 px-2 rounded-lg bg-yellow-50 text-yellow-700 font-medium">
+        <span className="py-0.5 sm:py-1 px-1.5 sm:px-2 rounded-lg bg-yellow-50 text-yellow-700 font-medium">
           Moderate (101–200)
         </span>
-        <span className="py-1 px-2 rounded-lg bg-orange-50 text-orange-700 font-medium">
+        <span className="py-0.5 sm:py-1 px-1.5 sm:px-2 rounded-lg bg-orange-50 text-orange-700 font-medium">
           Poor (201–300)
         </span>
-        <span className="py-1 px-2 rounded-lg bg-red-50 text-red-700 font-medium">
+        <span className="py-0.5 sm:py-1 px-1.5 sm:px-2 rounded-lg bg-red-50 text-red-700 font-medium">
           Very Poor (301–400)
         </span>
-        <span className="py-1 px-2 rounded-lg bg-rose-100 text-rose-900 font-medium">
+        <span className="py-0.5 sm:py-1 px-1.5 sm:px-2 rounded-lg bg-rose-100 text-rose-900 font-medium">
           Severe (401–500)
         </span>
       </div>
 
       {/* Recharts BarChart */}
-      <div className="h-80 w-full pt-4">
+      <div className="h-72 sm:h-80 w-full pt-4">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
-            margin={{ top: 20, right: 30, left: 10, bottom: 25 }}
+            margin={{ top: 20, right: 20, left: 0, bottom: 25 }}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
             <XAxis

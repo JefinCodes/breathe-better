@@ -223,9 +223,9 @@ export default function LocalityAqiTab({ locality }) {
   return (
     <div className="space-y-4">
       {/* Top Compact Command Center Grid: Live AQI & 24h Prediction Card */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5 sm:gap-4">
         {/* Left: Live Locality AQI Summary Card */}
-        <div className="md:col-span-6 bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between">
+        <div className="md:col-span-6 bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
@@ -237,8 +237,8 @@ export default function LocalityAqiTab({ locality }) {
               </span>
             </div>
 
-            <div className="flex items-baseline gap-4 mb-2">
-              <span className="text-5xl font-black text-slate-900 tracking-tight">
+            <div className="flex items-baseline gap-3 sm:gap-4 mb-2">
+              <span className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
                 {aqiInfo.aqiVal}
               </span>
               <div>
@@ -260,7 +260,7 @@ export default function LocalityAqiTab({ locality }) {
         </div>
 
         {/* Right: Next 24-Hour Average Prediction Card (Next 24h Only, >24h Discarded) */}
-        <div className="md:col-span-6 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-5 shadow-xs flex flex-col justify-between">
+        <div className="md:col-span-6 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-4 sm:p-5 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
@@ -273,8 +273,8 @@ export default function LocalityAqiTab({ locality }) {
             </div>
 
             {forecast24hStats ? (
-              <div className="flex items-baseline gap-4 mb-2">
-                <span className="text-5xl font-black text-emerald-400 tracking-tight">
+              <div className="flex items-baseline gap-3 sm:gap-4 mb-2">
+                <span className="text-4xl sm:text-5xl font-black text-emerald-400 tracking-tight">
                   {forecast24hStats.avgAqi}
                 </span>
                 <div>
@@ -303,13 +303,13 @@ export default function LocalityAqiTab({ locality }) {
       </div>
 
       {/* Compact Pollutant Grid (PM2.5, PM10, NO2, SO2, CO, O3) */}
-      <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs">
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 shadow-xs">
         <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
           <Wind className="w-3.5 h-3.5 text-emerald-600" />
           <span>Key Locality Pollutants Breakdown</span>
         </h4>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
           {['pm25', 'pm10', 'no2', 'so2', 'co', 'o3'].map((code) => {
             const item = aqiInfo.pollutants.find(
               (p) => p.code?.toLowerCase() === code || p.displayName?.toLowerCase().includes(code)
@@ -321,15 +321,15 @@ export default function LocalityAqiTab({ locality }) {
             return (
               <div
                 key={code}
-                className="p-3 rounded-2xl bg-slate-50 border border-slate-200/60 flex flex-col justify-between"
+                className="p-2.5 sm:p-3 rounded-2xl bg-slate-50 border border-slate-200/60 flex flex-col justify-between"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold text-slate-700 uppercase">{name}</span>
                   <span className="text-[9px] text-slate-400 uppercase font-mono">{code}</span>
                 </div>
                 <div className="my-1.5 flex items-baseline gap-1 min-w-0">
-                  <span className="text-lg font-black text-slate-900 leading-none">{value}</span>
-                  <span className="text-[10px] text-slate-400 font-medium truncate">{units}</span>
+                  <span className="text-base sm:text-lg font-black text-slate-900 leading-none">{value}</span>
+                  <span className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate">{units}</span>
                 </div>
                 <div className="w-full bg-slate-200 h-1 rounded-full overflow-hidden">
                   <div
@@ -346,7 +346,7 @@ export default function LocalityAqiTab({ locality }) {
       </div>
 
       {/* Hardcoded Health Advisory from Dashboard (Compact layout) */}
-      <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs">
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 shadow-xs">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
             <ShieldAlert className="w-4 h-4" />
@@ -361,7 +361,7 @@ export default function LocalityAqiTab({ locality }) {
           </div>
         </div>
 
-        <p className="text-xs text-slate-600 leading-relaxed pl-9">
+        <p className="text-xs text-slate-600 leading-relaxed pl-0 sm:pl-9 mt-1 sm:mt-0">
           {healthAdvisory}
         </p>
       </div>

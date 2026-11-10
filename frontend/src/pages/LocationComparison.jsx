@@ -144,15 +144,15 @@ export default function LocationComparison() {
         }
       />
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-8 pb-20">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-6 space-y-5 sm:space-y-8 pb-20">
         {/* Page Hero Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide mb-2">
               <ArrowLeftRight className="w-3.5 h-3.5" />
               Location Comparison
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
               Compare Air Quality Across Cities
             </h1>
             <p className="text-xs sm:text-sm text-gray-500 mt-1">
@@ -183,7 +183,7 @@ export default function LocationComparison() {
 
         {/* Required Sections in Strict Order: A -> B -> C -> D -> E -> F */}
         {selectedCities.length > 0 && (
-          <div className="space-y-8">
+          <div className="space-y-5 sm:space-y-8">
             {/* Section A: Summary Card */}
             <ComparisonSummaryCards
               selectedCities={selectedCities}

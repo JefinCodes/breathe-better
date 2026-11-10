@@ -80,11 +80,11 @@ export default function HealthAdvisory({ aqi, category, title = 'Health Advisory
   if (!paragraph) return null;
 
   return (
-    <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+    <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-5 md:p-6">
+      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 sm:mb-3">
         {title}
       </h3>
-      <p className="text-sm text-gray-700 leading-relaxed">
+      <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
         {paragraph}
       </p>
     </section>

@@ -39,7 +39,7 @@ export default function PopularThreadsSection({
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 shadow-xs space-y-5">
+    <div className="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 md:p-6 shadow-xs space-y-4 sm:space-y-5">
       {/* Tab Switcher & Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
@@ -56,7 +56,7 @@ export default function PopularThreadsSection({
           <button
             type="button"
             onClick={() => setActiveTab('popular')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'popular'
                 ? 'bg-white text-slate-900 shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
@@ -71,7 +71,7 @@ export default function PopularThreadsSection({
           <button
             type="button"
             onClick={() => setActiveTab('my-threads')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'my-threads'
                 ? 'bg-white text-emerald-800 shadow-xs'
                 : 'text-slate-600 hover:text-slate-900'
@@ -99,11 +99,11 @@ export default function PopularThreadsSection({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-3.5">
               {threads.map((t) => (
                 <div
                   key={t.id}
-                  className="p-4 rounded-2xl border border-slate-200/70 hover:border-emerald-300 hover:shadow-md bg-white transition-all flex flex-col justify-between group"
+                  className="p-3.5 sm:p-4 rounded-2xl border border-slate-200/70 hover:border-emerald-300 hover:shadow-md bg-white transition-all flex flex-col justify-between group"
                 >
                   <div>
                     {/* Header: Title + Messages Count Badge */}
@@ -169,7 +169,7 @@ export default function PopularThreadsSection({
                 return (
                   <div
                     key={t.id}
-                    className="p-4 rounded-2xl border border-slate-200/80 bg-white hover:shadow-xs transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                    className="p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 bg-white hover:shadow-xs transition-all flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4"
                   >
                     <div className="space-y-1.5 flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -220,7 +220,7 @@ export default function PopularThreadsSection({
                     </div>
 
                     {/* Actions: View Discussion & Mark Resolved / Close */}
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center gap-2 flex-shrink-0 flex-wrap sm:flex-nowrap">
                       <button
                         type="button"
                         onClick={() => onSelectThread(t)}
