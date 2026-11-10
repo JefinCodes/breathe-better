@@ -1,11 +1,9 @@
 <div align="center">
   <img src="frontend/public/logo.png" alt="Breathe Better Logo" width="120" />
   <h1>Breathe Better</h1>
-  <p><strong>Intelligent Air Quality Monitoring, Public Health Awareness, and Community Locality Action Platform</strong></p>
+  <p><strong>Intelligent Air Quality Monitoring, Public Health Awareness and Community Locality Action Platform</strong></p>
 
   [![Live Demo](https://img.shields.io/badge/Live_Demo-breathe--better--app.vercel.app-22c55e?style=for-the-badge&logo=vercel)](https://breathe-better-app.vercel.app/)
-  [![Backend API](https://img.shields.io/badge/Render-Backend_API-46E3B7?style=for-the-badge&logo=render)](https://breathe-better.onrender.com/)
-  [![License](https://img.shields.io/badge/License-ISC-blue?style=for-the-badge)](#)
 </div>
 
 ---
@@ -289,7 +287,7 @@ GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 
 # NVIDIA NIM LLM API (https://build.nvidia.com)
 NVIDIA_API_KEY=nvapi-your_nvidia_api_key_here
-NVIDIA_MODEL=deepseek-ai/deepseek-v4.1-flash
+NVIDIA_MODEL=nvidia/nemotron-3.5-lightning-30b-a3b
 
 # Neon Cloud PostgreSQL (https://console.neon.tech)
 DATABASE_URL=postgresql://username:password@ep-sample-12345.region.aws.neon.tech/neondb?sslmode=require
@@ -385,7 +383,7 @@ Manages locality user profiles, community threads, messages, and chatbot session
 
 ## 🔮 Future Improvements
 
-- [ ] **Enhanced Mobile UI**: Develop dedicated PWA capabilities and responsive gestures optimized for compact handheld screens.
-- [ ] **Enhanced Chatbot Capabilities**: Expand conversational skills with voice-input queries and personalized multi-lingual support (Hindi, regional Indian languages).
-- [ ] **Expanded Indian Cities & Rural Coverage**: Enlarge the indexed database to encompass smaller taluks, rural panchayats, and industrial suburban belts.
+- [ ] **Mobile UI Optimization**: Enhance the existing user interface to provide a fully responsive and mobile-friendly experience, optimizing layouts, navigation, component sizing, and interactions for smartphones and tablets.
+- [ ] **Enhanced Chatbot Intelligence**: Further refine the chatbot's conversational capabilities to improve response accuracy, contextual understanding, query interpretation, and the overall quality of user interactions.
+- [ ] **Indian Cities Database Refinement**: Improve the existing city database by expanding city coverage, identifying and removing duplicate entries, correcting inaccurate records, and eliminating invalid or incomplete location data to ensure reliable city searches.
 - [ ] **AQI Threshold Cross Alert System**: Configurable email and push notifications alerting registered users whenever tracked cities or neighborhood localities exceed safe AQI thresholds.
