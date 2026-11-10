@@ -56,17 +56,12 @@ export default function HistoricalAqiChart({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-gray-100">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
-              3
-            </span>
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
-              <History className="w-4 h-4 text-emerald-600" />
-              <span>Historical AQI Trajectory</span>
-              {cityName && <span className="text-gray-400 font-normal">({cityName})</span>}
-            </h2>
-          </div>
-          <p className="text-xs text-gray-500 mt-1 ml-8">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+            <History className="w-4 h-4 text-emerald-600" />
+            <span>Historical AQI Trajectory</span>
+            {cityName && <span className="text-gray-400 font-normal">({cityName})</span>}
+          </h2>
+          <p className="text-xs text-gray-500 mt-1">
             Hourly continuous air quality index progression over the selected historical interval.
           </p>
         </div>
@@ -153,7 +148,7 @@ export default function HistoricalAqiChart({
       <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-gray-100 text-[11px] text-gray-400">
         <div className="flex items-center gap-1.5">
           <Info className="w-3.5 h-3.5 text-gray-400" />
-          <span>Line gaps indicate hours where observations were missing from Google API. Missing data is never fabricated.</span>
+          <span>Line gaps indicate hours where observations were missing from Google API.</span>
         </div>
         <span>Timezone: IST (UTC+05:30)</span>
       </div>

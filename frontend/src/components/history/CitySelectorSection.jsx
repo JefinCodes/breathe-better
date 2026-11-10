@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, Search, Check, Sparkles, Navigation } from 'lucide-react';
+import { MapPin, Search, Check, Navigation } from 'lucide-react';
 import CityAutocomplete from '../CityAutocomplete';
 import { POPULAR_HISTORY_CITIES } from '../../lib/historyUtils';
 import { formatCityName } from '../../lib/utils';
@@ -33,15 +33,10 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
-              1
-            </span>
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
-              Select City for Historical Tracking
-            </h2>
-          </div>
-          <p className="text-xs text-gray-500 mt-1 ml-8">
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
+            Select City for Historical Tracking
+          </h2>
+          <p className="text-xs text-gray-500 mt-1">
             Verified Indian locations powered by SQLite database. Historical observations use exact geo-coordinates.
           </p>
         </div>
@@ -108,8 +103,8 @@ export default function CitySelectorSection({ selectedCity, onCitySelect }) {
 
       {/* Quick Select Popular Cities */}
       <div className="pt-2 border-t border-gray-100 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-medium text-gray-500 flex items-center gap-1 mr-1">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Popular Cities:
+        <span className="text-xs font-medium text-gray-500 mr-1">
+          Popular Cities:
         </span>
         {POPULAR_HISTORY_CITIES.map((city) => {
           const isCurrent = selectedCity?.geonameid === city.geonameid;

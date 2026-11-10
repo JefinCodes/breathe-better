@@ -47,19 +47,14 @@ export default function PollutantTrendChart({
       {/* Header and stats strip */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-3 border-b border-gray-100">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
-              4
+          <h3 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-emerald-600" />
+            <span>{label} Concentration Trend</span>
+            <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 font-normal">
+              {unit}
             </span>
-            <h3 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-emerald-600" />
-              <span>{label} Concentration Trend</span>
-              <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 font-normal">
-                {unit}
-              </span>
-            </h3>
-          </div>
-          <p className="text-xs text-gray-500 mt-1 ml-8">
+          </h3>
+          <p className="text-xs text-gray-500 mt-1">
             {fullName ? `${fullName}. ` : ''}Hourly concentrations mapped from the unified historical response.
           </p>
         </div>
@@ -153,7 +148,7 @@ export default function PollutantTrendChart({
       <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-gray-100 text-[11px] text-gray-400">
         <div className="flex items-center gap-1.5">
           <Info className="w-3.5 h-3.5 text-gray-400" />
-          <span>Metric values extracted directly from the combined historical query (single API call).</span>
+          <span>Metric values extracted directly from the combined historical query</span>
         </div>
         <span>Concentration unit: {unit} • IST</span>
       </div>

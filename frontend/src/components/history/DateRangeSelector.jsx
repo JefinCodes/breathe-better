@@ -79,16 +79,11 @@ export default function DateRangeSelector({
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
-              2
-            </span>
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
-              Historical Observation Interval
-            </h2>
-          </div>
-          <p className="text-xs text-gray-500 mt-1 ml-8">
-            Choose an observation window up to 30 days (Google Air Quality API maximum).
+          <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
+            Historical Observation Interval
+          </h2>
+          <p className="text-xs text-gray-500 mt-1">
+            Choose an observation window up to 30 days.
           </p>
         </div>
 
