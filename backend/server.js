@@ -6,6 +6,7 @@ const cors = require('cors');
 const citiesRouter = require('./routes/cities');
 const airQualityRouter = require('./routes/airQuality');
 const chatbotRouter = require('./routes/chatbot');
+const localityRouter = require('./routes/locality');
 const { initializeChatbotSchema } = require('./db/chatbotDb');
 
 const app = express();
@@ -47,6 +48,7 @@ app.use(express.json());
 app.use('/api/cities', citiesRouter);
 app.use('/api/air-quality', airQualityRouter);
 app.use('/api/chatbot', chatbotRouter);
+app.use('/api/locality', localityRouter);
 
 // Health check — useful for Render's health probe
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));

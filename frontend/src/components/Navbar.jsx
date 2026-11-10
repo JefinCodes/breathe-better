@@ -6,6 +6,7 @@ import {
   ArrowLeftRight,
   History,
   BookOpen,
+  Users,
   Menu,
   X,
   ChevronRight,
@@ -61,6 +62,15 @@ const NAV_ITEMS = [
     description: 'CPCB categories, health impacts & safety tips',
     icon: BookOpen,
     badgeColor: 'bg-purple-50 text-purple-600 border-purple-100',
+  },
+  {
+    to: '/locality',
+    end: false,
+    label: 'Locality',
+    mobileTitle: 'Community Locality',
+    description: 'Track neighborhood AQI, pin pollution hotspots & discuss',
+    icon: Users,
+    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   },
 ];
 

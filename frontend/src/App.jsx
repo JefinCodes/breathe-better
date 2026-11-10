@@ -4,6 +4,7 @@ import HeatMap from './pages/HeatMap';
 import LocationComparison from './pages/LocationComparison';
 import HistoricalTracker from './pages/HistoricalTracker';
 import AqiGuide from './pages/AqiGuide';
+import Locality from './pages/Locality';
 import ChatbotWidget from './components/chatbot/ChatbotWidget';
 
 /**
@@ -13,6 +14,7 @@ import ChatbotWidget from './components/chatbot/ChatbotWidget';
  * Route /compare -> Page 3: Location Comparison (Stage 5)
  * Route /history -> Page 4: Historical Pollution Tracker (Stage 6)
  * Route /guide -> Page 5: Understanding India’s AQI (Educational Standards Guide)
+ * Route /locality -> Page 6: Locality & Community Pollution Tracker
  */
 export default function App() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
         <Route path="/about-aqi" element={<Navigate to="/guide" replace />} />
         <Route path="/understanding-aqi" element={<Navigate to="/guide" replace />} />
         <Route path="/standards" element={<Navigate to="/guide" replace />} />
+        <Route path="/locality" element={<Locality />} />
+        <Route path="/community" element={<Navigate to="/locality" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ChatbotWidget />

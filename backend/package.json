@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "init-chatbot-db": "node scripts/initChatbotDb.js"
+    "init-chatbot-db": "node scripts/initChatbotDb.js",
+    "init-locality-db": "node scripts/initLocalityDb.js"
   },
   "keywords": [],
   "author": "",
